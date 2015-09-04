@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJS 1.7.0 javascript Bar-Qr code decoder 
+ * WebCodeCamJS 1.8.0 javascript Bar-Qr code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -15,10 +15,12 @@
     }
     var txt = "innerText" in HTMLElement.prototype ? "innerText" : "textContent";
     var scannerLaser = Q(".scanner-laser"),
+        imageUrl = Q("#image-url");
         play = Q("#play"),
         scannedImg = Q("#scanned-img"),
         scannedQR = Q("#scanned-QR"),
         grabImg = Q("#grab-img"),
+        decodeLocal = Q("#decode-img"),
         pause = Q("#pause"),
         stop = Q("#stop"),
         contrast = Q("#contrast"),
@@ -71,10 +73,12 @@
         }
     };
     var decoder = new WebCodeCamJS("#webcodecam-canvas");
-    decoder.buildSelectMenu("#camera-select");
+    decoder.buildSelectMenu("#camera-select").init(args);
+    decodeLocal.addEventListener("click", function() {
+        Page.decodeLocalImage();
+    }, false);
     play.addEventListener("click", function() {
         if (!decoder.isInitialized()) {
-            decoder.init(args);
             scannedQR[txt] = "Scanning ...";
         } else {
             scannedQR[txt] = "Scanning ...";
@@ -151,6 +155,12 @@
                 decoder.options.grayScale = false;
             }
         }
+    };
+    Page.decodeLocalImage = function() {
+        if (decoder.isInitialized()) {
+            decoder.decodeLocalImage(imageUrl.value);
+        }
+        imageUrl.value = null;
     };
     var getZomm = setInterval(function() {
         var a;

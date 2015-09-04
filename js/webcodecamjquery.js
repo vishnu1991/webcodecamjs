@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJQuery 1.7.0 jQuery plugin Bar code and QR code decoder 
+ * WebCodeCamJQuery 1.8.0 jQuery plugin Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -29,6 +29,8 @@
     var Self, display, videoSelect, lastImageSrc, con, beepSound, w, h,
         DecodeWorker = new Worker('js/DecoderWorker.js'),
         video = $('<video muted autoplay></video>')[0],
+        sucessLocalDecode = false,
+        localImage = false,
         flipped = false,
         isStreaming = false,
         delayBool = false,
@@ -93,9 +95,6 @@
     }
 
     function init() {
-        con = display.getContext('2d');
-        w = Self.options.width;
-        h = Self.options.height;
         var constraints = changeConstraints();
         try {
             mediaDevices.getUserMedia(constraints).then(cameraSuccess).catch(function(error) {
@@ -110,20 +109,23 @@
     }
 
     function play() {
-        if (!localStream) {
-            init();
+        if (!localImage) {
+            if (!localStream) {
+                init();
+            }
+            con.clearRect(0, 0, w, h);
+            delayBool = true;
+            video.play();
+            setTimeout(function() {
+                delayBool = false;
+                if (Self.options.decodeBarCodeRate) {
+                    tryParseBarCode();
+                }
+                if (Self.options.decodeQRCodeRate) {
+                    tryParseQRCode();
+                }
+            }, 2E3);
         }
-        delayBool = true;
-        video.play();
-        setTimeout(function() {
-            delayBool = false;
-            if (Self.options.decodeBarCodeRate) {
-                tryParseBarCode();
-            }
-            if (Self.options.decodeQRCodeRate) {
-                tryParseQRCode();
-            }
-        }, 2E3);
     }
 
     function stop() {
@@ -133,10 +135,9 @@
         video.streamSrc(null);
         try {
             localStream.stop();
-        } catch (e) {
             localStream.active = false;
             localStream.enabled = false;
-        }
+        } catch (e) {}
         localStream = null;
     }
 
@@ -211,33 +212,33 @@
 
     function setCallBack() {
         DecodeWorker.onmessage = function(e) {
-            if (delayBool || video.paused) {
-                return;
-            }
-            if (e.data.success && e.data.result[0].length > 1 && e.data.result[0].indexOf('undefined') == -1) {
-                beepSound.play();
-                delayBool = true;
-                delay();
-                setTimeout(function() {
-                    Self.options.resultFunction(e.data.result[0], lastImageSrc);
-                }, 0);
-            } else {
-                if (e.data.finished && Self.options.decodeBarCodeRate) {
+            if (localImage || (!delayBool && !video.paused)) {
+                if (e.data.success && e.data.result[0].length > 1 && e.data.result[0].indexOf('undefined') == -1) {
+                    sucessLocalDecode = true;
+                    beepSound.play();
+                    delayBool = true;
+                    delay();
+                    setTimeout(function() {
+                        Self.options.resultFunction(e.data.result[0], lastImageSrc);
+                    }, 0);
+                } else if (e.data.finished && Self.options.decodeBarCodeRate) {
                     flipped = !flipped;
-                    setTimeout(tryParseBarCode, 1E3 / Self.options.decodeBarCodeRate);
+                    if (!sucessLocalDecode || !localImage) {
+                        setTimeout(tryParseBarCode, 1E3 / Self.options.decodeBarCodeRate);
+                    }
                 }
             }
         };
         qrcode.callback = function(a) {
-            if (delayBool || video.paused) {
-                return;
+            if (localImage || (!delayBool && !video.paused)) {
+                beepSound.play();
+                delayBool = true;
+                delay();
+                sucessLocalDecode = true;
+                setTimeout(function() {
+                    Self.options.resultFunction(a, lastImageSrc);
+                }, 0);
             }
-            beepSound.play();
-            delayBool = true;
-            delay();
-            setTimeout(function() {
-                Self.options.resultFunction(a, lastImageSrc);
-            }, 0);
         };
     }
 
@@ -259,14 +260,16 @@
             lastImageSrc = display.toDataURL();
             qrcode.decode();
         } catch (e) {
-            if (!delayBool) {
+            if (!localImage && !delayBool) {
                 setTimeout(tryParseQRCode, 1E3 / Self.options.decodeQRCodeRate);
             }
         }
     }
 
     function delay() {
-        setTimeout(play, 500, true);
+        if (!localImage) {
+            setTimeout(play, 500, true);
+        }
     }
 
     function optimalZoom() {
@@ -444,6 +447,29 @@
         return constraints;
     }
 
+    function decodeLocalImage(srcstr) {
+        stop();
+        localImage = true;
+        sucessLocalDecode = false;
+        var img = new Image();
+        img.onload = function() {
+            con.drawImage(this, 0, 0, w, h);
+            tryParseQRCode();
+            tryParseBarCode();
+        }
+        if (srcstr) {
+            img.src = srcstr;
+        } else {
+            if (fileReader) {
+                new fileReader().Init('jpg|png|jpeg|gif', 'dataURL', function(e) {
+                    img.src = e.data
+                }, true);
+            } else {
+                alert("fileReader class not found!");
+            }
+        }
+    }
+
     function NotSupportError(message) {
         this.name = 'NotSupportError';
         this.message = (message || '');
@@ -457,6 +483,9 @@
                     alert('Element type must be canvas!');
                     return false;
                 }
+                con = display.getContext('2d');
+                w = Self.options.width;
+                h = Self.options.height;
                 qrcode.sourceCanvas = display;
                 initialized = true;
                 setEventListeners();
@@ -469,6 +498,7 @@
         },
         play: function() {
             this.init();
+            localImage = false;
             play();
             return this;
         },
@@ -489,6 +519,9 @@
         },
         getLastImageSrc: function() {
             return display.toDataURL();
+        },
+        decodeLocalImage: function(srcstr) {
+            decodeLocalImage(srcstr);
         },
         isInitialized: function() {
             return initialized;

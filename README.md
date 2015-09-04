@@ -23,6 +23,13 @@ Advantages compared to the previous version:<br>
 Version
 ----
 
+1.8.0
+
+    - Add decode local image function
+
+Version
+----
+
 1.7.0
 
     - Add jquery version (WebCodeCamJQuery)
