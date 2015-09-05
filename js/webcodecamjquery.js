@@ -494,8 +494,8 @@
                     return false;
                 }
                 con = display.getContext('2d');
-                w = Self.options.width;
-                h = Self.options.height;
+                display.width = w = Self.options.width;
+                display.height = h = Self.options.height;
                 qrcode.sourceCanvas = display;
                 initialized = true;
                 setEventListeners();

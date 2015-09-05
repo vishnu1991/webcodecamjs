@@ -531,12 +531,12 @@ var WebCodeCamJS = function(element) {
             }
             con = display.getContext('2d');
             if (opt) {
-                w = options.width;
-                h = options.height;
-                qrcode.sourceCanvas = display;
                 options = mergeRecursive(options, opt);
                 beepSound = new Audio(options.beep);
             }
+            display.width = w = options.width;
+            display.height = h = options.height;
+            qrcode.sourceCanvas = display;
             initialized = true;
             setEventListeners();
             if (options.decodeQRCodeRate || options.decodeBarCodeRate) {
