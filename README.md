@@ -23,9 +23,16 @@ Advantages compared to the previous version:<br>
 Version
 ----
 
+1.9.0
+
+    - Add function: decode image from url
+
+Version
+----
+
 1.8.0
 
-    - Add decode local image function
+    - Add function: decode local image
 
 Version
 ----

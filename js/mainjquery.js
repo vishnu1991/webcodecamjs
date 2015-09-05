@@ -142,9 +142,9 @@
     };
     Page.decodeLocalImage = function() {
         if (decoder.isInitialized()) {
-            decoder.decodeLocalImage(imageUrl.value);
+            decoder.decodeLocalImage(imageUrl.val());
         }
-        imageUrl.value = null;
+        imageUrl.val(null);
     };
     var getZomm = setInterval(function() {
         var a;

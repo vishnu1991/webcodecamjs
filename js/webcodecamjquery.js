@@ -447,18 +447,21 @@
         return constraints;
     }
 
-    function decodeLocalImage(srcstr) {
+    function decodeLocalImage(url) {
         stop();
         localImage = true;
         sucessLocalDecode = false;
         var img = new Image();
         img.onload = function() {
-            con.drawImage(this, 0, 0, w, h);
+            con.fillStyle = '#fff';
+            con.fillRect(0, 0, w, h);
+            con.drawImage(this, 5, 5, w - 10, h - 10);
             tryParseQRCode();
             tryParseBarCode();
         }
-        if (srcstr) {
-            img.src = srcstr;
+        if (url) {
+            download("temp", url);
+            decodeLocalImage();
         } else {
             if (fileReader) {
                 new fileReader().Init('jpg|png|jpeg|gif', 'dataURL', function(e) {
@@ -468,6 +471,13 @@
                 alert("fileReader class not found!");
             }
         }
+    }
+
+    function download(filename, url) {
+        var a = window.document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
     }
 
     function NotSupportError(message) {
@@ -520,8 +530,8 @@
         getLastImageSrc: function() {
             return display.toDataURL();
         },
-        decodeLocalImage: function(srcstr) {
-            decodeLocalImage(srcstr);
+        decodeLocalImage: function(url) {
+            decodeLocalImage(url);
         },
         isInitialized: function() {
             return initialized;
