@@ -1,10 +1,10 @@
 /*!
- * HTML5 fileReader v.1.0.0
+ * HTML5 FileReaderHelper v.1.0.0
  * Author: Tóth András
  * Licence: MIT
  * url: http://atandrastoth.co.uk
  */
-var fileReader = function() {
+var FileReaderHelper = function() {
     var init = function(types, readAs, callBack, multy) {
         multy = typeof multy == 'undefined' ? false : multy;
         var input = document.createElement('input');

@@ -23,6 +23,13 @@ Advantages compared to the previous version:<br>
 Version
 ----
 
+1.9.1
+
+    - Add default cameraindex parameter to buildSelectMenu, optional
+
+Version
+----
+
 1.9.0
 
     - Add function: decode image from url
@@ -87,7 +94,7 @@ Required HTML & Javascript example
         <!-- 
             Using jquery version:
             <script type="text/javascript" src="js/jquery.js"></script>
-        	<script type="text/javascript" src="js/qrcodelib.js"></script>
+           <script type="text/javascript" src="js/qrcodelib.js"></script>
             <script type="text/javascript" src="js/webcodecamjquery.js"></script>
         -->
         <script type="text/javascript">
@@ -160,7 +167,7 @@ Required HTML & Javascript example
     /* Chrome & Spartan: build select menu, return decoder object
     *  Firefox: the default camera initializes, return decoder object 
     */
-    decoder.buildSelectMenu('select');
+    decoder.buildSelectMenu('#camera-select', index); //index : default camera index optional
     //init with arguments, return decoder object
     decoder.init(args);
     /*OR with defaults*/
@@ -175,7 +182,7 @@ Required HTML & Javascript example
     /* Chrome & Spartan: build select menu
     *  Firefox: the default camera initializes, return decoder object 
     */
-    decoder.buildSelectMenu("#camera-select");
+    decoder.buildSelectMenu('#camera-select', index); //index : default camera index optional
     //simple initialization
     decoder.init();
 
@@ -186,6 +193,9 @@ Required HTML & Javascript example
     decoder.play();
     /* get current image from camera */
     decoder.getLastImageSrc();
+    /* decode local image */
+    /* if url is defined download image before staring open process */
+    decoder.decodeLocalImage(url);
     /* get optimal zoom */
     decoder.getOptimalZoom();
     /* Configurable options */

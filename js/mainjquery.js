@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJS 1.8.0 javascript Bar-Qr code decoder 
+ * WebCodeCamJQuery 1.9.1 javascript Bar-Qr code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -7,8 +7,8 @@
  */
 (function(undefined) {
     var scannerLaser = $(".scanner-laser"),
-    	imageUrl = $("#image-url"),
-    	decodeLocal = $("#decode-img"),
+    	  imageUrl = $("#image-url"),
+    	  decodeLocal = $("#decode-img"),
         play = $("#play"),
         scannedImg = $("#scanned-img"),
         scannedQR = $("#scanned-QR"),

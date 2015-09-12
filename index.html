@@ -8,8 +8,8 @@
     </head>
     <body>
         <div class="page-header text-center">
-            <h1 style="color: cadetblue;">WebCodeCamJS 1.9.0 <br>&amp;<br>
-                                          WebCodeCamJQuery 1.9.0<br>
+            <h1 style="color: cadetblue;">WebCodeCamJS 1.9.1 <br>&amp;<br>
+                                          WebCodeCamJQuery 1.9.1<br>
                 <small>Download from:
                     <a href="https://github.com/andrastoth/WebCodeCamJS" target="_blank"> GitHub </a> Or 
                     <a href="http://www.jsclasses.org/package/446-JavaScript-Qr-and-barcode-decoder.html" target="_blank"> JSclasses </a>
@@ -217,7 +217,7 @@
     <span style="color: #75715e">/* Chrome &amp; Spartan: build select menu, return decoder object</span>
 <span style="color: #75715e">    *  Firefox: the default camera initializes, return decoder object </span>
 <span style="color: #75715e">    */</span>
-    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;select&#39;</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">index</span><span style="color: #f8f8f2">);</span> <span style="color: #75715e">//index : default camera index optional</span>
     <span style="color: #75715e">//init with arguments, return decoder object</span>
     <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">args</span><span style="color: #f8f8f2">);</span>
     <span style="color: #75715e">/*OR with defaults*/</span>
@@ -232,7 +232,7 @@
     <span style="color: #75715e">/* Chrome &amp; Spartan: build select menu</span>
 <span style="color: #75715e">    *  Firefox: the default camera initializes, return decoder object </span>
 <span style="color: #75715e">    */</span>
-    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;#camera-select&quot;</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">index</span><span style="color: #f8f8f2">);</span> <span style="color: #75715e">//index : default camera index optional</span>
     <span style="color: #75715e">//simple initialization</span>
     <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">();</span>
 
@@ -245,7 +245,7 @@
     <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">getLastImageSrc</span><span style="color: #f8f8f2">();</span>
     <span style="color: #75715e">/* decode local image */</span>
     <span style="color: #75715e">/* if url is defined download image before staring open process */</span>
-    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">decodeLocalImage</span><span style="color: #f8f8f2">(url);</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">decodeLocalImage</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">url</span><span style="color: #f8f8f2">);</span>
     <span style="color: #75715e">/* get optimal zoom */</span>
     <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">getOptimalZoom</span><span style="color: #f8f8f2">();</span>
     <span style="color: #75715e">/* Configurable options */</span>

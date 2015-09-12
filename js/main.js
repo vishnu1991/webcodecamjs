@@ -1,11 +1,12 @@
 /*!
- * WebCodeCamJS 1.8.0 javascript Bar-Qr code decoder 
+ * WebCodeCamJS 1.9.1 javascript Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
  * Licensed under the MIT license
  */
 (function(undefined) {
+    'use strict';
     function Q(el) {
         if (typeof el === 'string') {
             var els = document.querySelectorAll(el);
@@ -14,34 +15,34 @@
         return el;
     }
     var txt = "innerText" in HTMLElement.prototype ? "innerText" : "textContent";
-    var scannerLaser = Q(".scanner-laser"),
-        imageUrl = Q("#image-url");
-        play = Q("#play"),
-        scannedImg = Q("#scanned-img"),
-        scannedQR = Q("#scanned-QR"),
-        grabImg = Q("#grab-img"),
-        decodeLocal = Q("#decode-img"),
-        pause = Q("#pause"),
-        stop = Q("#stop"),
-        contrast = Q("#contrast"),
-        contrastValue = Q("#contrast-value"),
-        zoom = Q("#zoom"),
-        zoomValue = Q("#zoom-value"),
-        brightness = Q("#brightness"),
-        brightnessValue = Q("#brightness-value"),
-        threshold = Q("#threshold"),
-        thresholdValue = Q("#threshold-value"),
-        sharpness = Q("#sharpness"),
-        sharpnessValue = Q("#sharpness-value"),
-        grayscale = Q("#grayscale"),
-        grayscaleValue = Q("#grayscale-value");
+    var scannerLaser = new Q(".scanner-laser"),
+        imageUrl =new  Q("#image-url"),
+        play = new Q("#play"),
+        scannedImg = new Q("#scanned-img"),
+        scannedQR = new Q("#scanned-QR"),
+        grabImg = new Q("#grab-img"),
+        decodeLocal = new Q("#decode-img"),
+        pause = new Q("#pause"),
+        stop = new Q("#stop"),
+        contrast = new Q("#contrast"),
+        contrastValue = new Q("#contrast-value"),
+        zoom = new Q("#zoom"),
+        zoomValue = new Q("#zoom-value"),
+        brightness = new Q("#brightness"),
+        brightnessValue = new Q("#brightness-value"),
+        threshold = new Q("#threshold"),
+        thresholdValue = new Q("#threshold-value"),
+        sharpness = new Q("#sharpness"),
+        sharpnessValue = new Q("#sharpness-value"),
+        grayscale = new Q("#grayscale"),
+        grayscaleValue = new Q("#grayscale-value");
     var args = {
         autoBrightnessValue: 100,
         resultFunction: function(text, imgSrc) {
             [].forEach.call(scannerLaser, function(el) {
-                fadeOut(el, .5);
+                fadeOut(el, 0.5);
                 setTimeout(function() {
-                    fadeIn(el, .5);
+                    fadeIn(el, 0.5);
                 }, 300);
             });
             scannedImg.src = imgSrc;
@@ -134,7 +135,7 @@
     };
     Page.changeSharpness = function() {
         if (decoder.isInitialized()) {
-            var value = sharpness["checked"];
+            var value = sharpness.checked;
             if (value) {
                 sharpnessValue[txt] = sharpnessValue[txt].split(":")[0] + ": on";
                 decoder.options.sharpness = [0, -1, 0, -1, 5, -1, 0, -1, 0];
@@ -146,7 +147,7 @@
     };
     Page.changeGrayscale = function() {
         if (decoder.isInitialized()) {
-            var value = grayscale["checked"];
+            var value = grayscale.checked;
             if (value) {
                 grayscaleValue[txt] = grayscaleValue[txt].split(":")[0] + ": on";
                 decoder.options.grayScale = true;
@@ -178,7 +179,7 @@
     function fadeOut(el, v) {
         el.style.opacity = 1;
         (function fade() {
-            if ((el.style.opacity -= .1) < v) {
+            if ((el.style.opacity -= 0.1) < v) {
                 el.style.display = "none";
                 el.classList.add("is-hidden");
             } else {
@@ -195,7 +196,7 @@
         el.style.display = display || "block";
         (function fade() {
             var val = parseFloat(el.style.opacity);
-            if (!((val += .1) > v)) {
+            if (!((val += 0.1) > v)) {
                 el.style.opacity = val;
                 requestAnimationFrame(fade);
             }

@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJS 1.8.0 javascript Bar code and QR code decoder 
+ * WebCodeCamJS 1.9.1 javascript Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -9,7 +9,7 @@ var WebCodeCamJS = function(element) {
     'use strict';
     this.Version = {
         name: 'WebCodeCamJS',
-        version: '1.7.0.',
+        version: '1.9.1',
         author: 'Tóth András'
     };
     var mediaDevices = navigator.mediaDevices || ((navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) ? {
@@ -30,7 +30,7 @@ var WebCodeCamJS = function(element) {
         this.src = !!stream ? (window.URL || window.webkitURL).createObjectURL(stream) : new String();
     };
     var videoSelect, lastImageSrc, con, beepSound, w, h;
-    var display = Q(element),
+    var display = new Q(element),
         DecodeWorker = new Worker('js/DecoderWorker.js'),
         video = html('<video muted autoplay></video>'),
         sucessLocalDecode = false,
@@ -128,7 +128,6 @@ var WebCodeCamJS = function(element) {
         video.pause();
         video.streamSrc(null);
         try {
-            localStream.stop();
             localStream.active = false;
             localStream.enabled = false;
         } catch (e) {}
@@ -386,8 +385,8 @@ var WebCodeCamJS = function(element) {
         return output;
     }
 
-    function buildSelectMenu(selectorVideo) {
-        videoSelect = Q(selectorVideo);
+    function buildSelectMenu(selectorVideo, ind) {
+        videoSelect = new Q(selectorVideo);
         videoSelect.innerHTML = '';
         try {
             if (mediaDevices && mediaDevices.enumerateDevices) {
@@ -395,6 +394,7 @@ var WebCodeCamJS = function(element) {
                     devices.forEach(function(device) {
                         gotSources(device);
                     });
+                    videoSelect.selectedIndex = videoSelect.children.length <= ind ? 0 : ind;
                 }).catch(function(error) {
                     options.getDevicesError(error);
                 });
@@ -414,7 +414,6 @@ var WebCodeCamJS = function(element) {
             var face = (!device.facing || device.facing === '') ? 'unknown' : device.facing;
             var text = device.label || 'camera ' + (videoSelect.length + 1) + ' (facing: ' + face + ')';
             html('<option value="' + (device.id || device.deviceId) + '">' + text + '</option>', videoSelect);
-            videoSelect.children[0].setAttribute('selected', true);
         }
     }
 
@@ -460,14 +459,14 @@ var WebCodeCamJS = function(element) {
             con.drawImage(this, 5, 5, w - 10, h - 10);
             tryParseQRCode();
             tryParseBarCode();
-        }
+        };
         if (url) {
             download("temp", url);
             decodeLocalImage();
         } else {
-            if (fileReader) {
-                new fileReader().Init('jpg|png|jpeg|gif', 'dataURL', function(e) {
-                    img.src = e.data
+            if (FileReaderHelper) {
+                new FileReaderHelper().Init('jpg|png|jpeg|gif', 'dataURL', function(e) {
+                    img.src = e.data;
                 }, true);
             } else {
                 alert("fileReader class not found!");
@@ -557,8 +556,8 @@ var WebCodeCamJS = function(element) {
             pause();
             return this;
         },
-        buildSelectMenu: function(selector) {
-            buildSelectMenu(selector);
+        buildSelectMenu: function(selector, ind) {
+            buildSelectMenu(selector, ind ? ind : 0);
             return this;
         },
         getOptimalZoom: function() {

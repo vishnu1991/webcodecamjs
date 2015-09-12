@@ -1,11 +1,10 @@
 /*!
- * WebCodeCamJQuery 1.8.0 jQuery plugin Bar code and QR code decoder 
+ * WebCodeCamJQuery 1.9.1 jQuery plugin Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
  * Licensed under the MIT license
  */
-;
 (function($, window, document, undefined) {
     'use strict';
     var pluginName = 'WebCodeCamJQuery';
@@ -392,7 +391,7 @@
         return output;
     }
 
-    function buildSelectMenu(selectorVideo) {
+    function buildSelectMenu(selectorVideo, ind) {
         videoSelect = $(selectorVideo);
         videoSelect.html('');
         try {
@@ -401,7 +400,7 @@
                     devices.forEach(function(device) {
                         gotSources(device);
                     });
-                    videoSelect.children('option:first').prop('selected', true);
+                    videoSelect.prop('selectedIndex', videoSelect.children().length <= ind ? 0 : ind);
                 }).catch(function(error) {
                     Self.options.getDevicesError(error);
                 });
@@ -458,14 +457,14 @@
             con.drawImage(this, 5, 5, w - 10, h - 10);
             tryParseQRCode();
             tryParseBarCode();
-        }
+        };
         if (url) {
             download("temp", url);
             decodeLocalImage();
         } else {
-            if (fileReader) {
-                new fileReader().Init('jpg|png|jpeg|gif', 'dataURL', function(e) {
-                    img.src = e.data
+            if (FileReaderHelper) {
+                new FileReaderHelper().Init('jpg|png|jpeg|gif', 'dataURL', function(e) {
+                    img.src = e.data;
                 }, true);
             } else {
                 alert("fileReader class not found!");
@@ -520,8 +519,8 @@
             pause();
             return this;
         },
-        buildSelectMenu: function(selector) {
-            buildSelectMenu(selector);
+        buildSelectMenu: function(selector, ind) {
+            buildSelectMenu(selector, ind ? ind : 0);
             return this;
         },
         getOptimalZoom: function() {
