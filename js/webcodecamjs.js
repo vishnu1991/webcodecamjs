@@ -107,7 +107,6 @@ var WebCodeCamJS = function(element) {
             if (!localStream) {
                 init();
             }
-            con.clearRect(0, 0, w, h);
             delayBool = true;
             video.play();
             setTimeout(function() {
@@ -123,10 +122,10 @@ var WebCodeCamJS = function(element) {
     }
 
     function stop() {
-        con.clearRect(0, 0, w, h);
         delayBool = true;
         video.pause();
         video.streamSrc(null);
+        con.clearRect(0, 0, w, h);
         try {
             localStream.active = false;
             localStream.enabled = false;

@@ -23,7 +23,7 @@
                     document.querySelector('body').appendChild(aChild);
                 }
             };
-            var decoder = new WebCodeCamJS("canvas").buildSelectMenu('select').init(arg);
+            var decoder = new WebCodeCamJS("canvas").buildSelectMenu('select').init(arg).play();
             document.querySelector('select').addEventListener('change', function(){
             	decoder.stop().play();
             });
