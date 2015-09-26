@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJS 1.9.1 javascript Bar code and QR code decoder 
+ * WebCodeCamJS 1.9.2 javascript Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -9,10 +9,10 @@ var WebCodeCamJS = function(element) {
     'use strict';
     this.Version = {
         name: 'WebCodeCamJS',
-        version: '1.9.1',
+        version: '1.9.2',
         author: 'Tóth András'
     };
-    var mediaDevices = navigator.mediaDevices || ((navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) ? {
+    var mediaDevices = (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) ? navigator.mediaDevices : ((navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) ? {
         getUserMedia: function(c) {
             return new Promise(function(y, n) {
                 (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia).call(navigator, c, y, n);
