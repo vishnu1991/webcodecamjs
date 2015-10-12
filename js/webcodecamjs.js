@@ -30,7 +30,7 @@ var WebCodeCamJS = function(element) {
         this.src = !!stream ? (window.URL || window.webkitURL).createObjectURL(stream) : new String();
     };
     var videoSelect, lastImageSrc, con, beepSound, w, h;
-    var display = new Q(element),
+    var display = Q(element),
         DecodeWorker = new Worker('js/DecoderWorker.js'),
         video = html('<video muted autoplay></video>'),
         sucessLocalDecode = false,
@@ -386,7 +386,7 @@ var WebCodeCamJS = function(element) {
     }
 
     function buildSelectMenu(selectorVideo, ind) {
-        videoSelect = new Q(selectorVideo);
+        videoSelect = Q(selectorVideo);
         videoSelect.innerHTML = '';
         try {
             if (mediaDevices && mediaDevices.enumerateDevices) {
