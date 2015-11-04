@@ -26,7 +26,11 @@
         sharpness = $("#sharpness"),
         sharpnessValue = $("#sharpness-value"),
         grayscale = $("#grayscale"),
-        grayscaleValue = $("#grayscale-value");
+        grayscaleValue = $("#grayscale-value"),
+        flipVertical = $("#flipVertical"),
+        flipVerticalValue = $("#flipVertical-value"),
+        flipHorizontal = $("#flipHorizontal"),
+        flipHorizontalValue = $("#flipHorizontal-value");
     var args = {
         autoBrightnessValue: 100,
         resultFunction: function(text, imgSrc) {
@@ -137,6 +141,30 @@
             } else {
                 grayscaleValue.text(grayscaleValue.text().split(":")[0] + ": off");
                 decoder.options.grayScale = false;
+            }
+        }
+    };
+    Page.changeVertical = function() {
+        if (decoder.isInitialized()) {
+            var value = flipVertical.prop("checked");
+            if (value) {
+                flipVerticalValue.text(flipVerticalValue.text().split(":")[0] + ": on");
+                decoder.options.flipVertical = value;
+            } else {
+                flipVerticalValue.text(flipVerticalValue.text().split(":")[0] + ": off");
+                decoder.options.flipVertical = value;
+            }
+        }
+    };
+    Page.changeHorizontal = function() {
+        if (decoder.isInitialized()) {
+            var value = flipHorizontal.prop("checked");
+            if (value) {
+                flipHorizontalValue.text(flipHorizontalValue.text().split(":")[0] + ": on");
+                decoder.options.flipHorizontal = value;
+            } else {
+                flipHorizontalValue.text(flipHorizontalValue.text().split(":")[0] + ": off");
+                decoder.options.flipHorizontal = value;
             }
         }
     };

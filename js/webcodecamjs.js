@@ -30,7 +30,7 @@ var WebCodeCamJS = function(element) {
         this.src = !!stream ? (window.URL || window.webkitURL).createObjectURL(stream) : new String();
     };
     var videoSelect, lastImageSrc, con, beepSound, w, h;
-    var display = new Q(element),
+    var display = Q(element),
         DecodeWorker = new Worker('js/DecoderWorker.js'),
         video = html('<video muted autoplay></video>'),
         sucessLocalDecode = false,
@@ -158,14 +158,6 @@ var WebCodeCamJS = function(element) {
                 }
                 display.setAttribute('width', w);
                 display.setAttribute('height', h);
-                if (options.flipHorizontal) {
-                    con.scale(-1, 1);
-                    con.translate(-w, 0);
-                }
-                if (options.flipVertical) {
-                    con.scale(1, -1);
-                    con.translate(0, -h);
-                }
                 isStreaming = true;
                 if (options.decodeQRCodeRate || options.decodeBarCodeRate) {
                     delay();
@@ -174,31 +166,31 @@ var WebCodeCamJS = function(element) {
         }, false);
         video.addEventListener('play', function() {
             setInterval(function() {
-                if (video.paused || video.ended) {
-                    return;
+                if (!video.paused && !video.ended) {
+                    display.style.transform = 'scale(' + (options.flipHorizontal ? '-1' : '1') + ', ' + (options.flipVertical ? '-1' : '1') + ')';
+                    var z = options.zoom;
+                    if (z < 0) {
+                        z = optimalZoom();
+                    }
+                    con.drawImage(video, (w * z - w) / -2, (h * z - h) / -2, w * z, h * z);
+                    var imageData = con.getImageData(0, 0, w, h);
+                    if (options.grayScale) {
+                        imageData = grayScale(imageData);
+                    }
+                    if (options.brightness !== 0 || options.autoBrightnessValue) {
+                        imageData = brightness(imageData, options.brightness);
+                    }
+                    if (options.contrast !== 0) {
+                        imageData = contrast(imageData, options.contrast);
+                    }
+                    if (options.threshold !== 0) {
+                        imageData = threshold(imageData, options.threshold);
+                    }
+                    if (options.sharpness.length !== 0) {
+                        imageData = convolute(imageData, options.sharpness);
+                    }
+                    con.putImageData(imageData, 0, 0);
                 }
-                var z = options.zoom;
-                if (z < 0) {
-                    z = optimalZoom();
-                }
-                con.drawImage(video, (w * z - w) / -2, (h * z - h) / -2, w * z, h * z);
-                var imageData = con.getImageData(0, 0, w, h);
-                if (options.grayScale) {
-                    imageData = grayScale(imageData);
-                }
-                if (options.brightness !== 0 || options.autoBrightnessValue) {
-                    imageData = brightness(imageData, options.brightness);
-                }
-                if (options.contrast !== 0) {
-                    imageData = contrast(imageData, options.contrast);
-                }
-                if (options.threshold !== 0) {
-                    imageData = threshold(imageData, options.threshold);
-                }
-                if (options.sharpness.length !== 0) {
-                    imageData = convolute(imageData, options.sharpness);
-                }
-                con.putImageData(imageData, 0, 0);
             }, 1E3 / options.frameRate);
         }, false);
     }
@@ -386,7 +378,7 @@ var WebCodeCamJS = function(element) {
     }
 
     function buildSelectMenu(selectorVideo, ind) {
-        videoSelect = new Q(selectorVideo);
+        videoSelect = Q(selectorVideo);
         videoSelect.innerHTML = '';
         try {
             if (mediaDevices && mediaDevices.enumerateDevices) {

@@ -7,6 +7,7 @@
  */
 (function(undefined) {
     'use strict';
+
     function Q(el) {
         if (typeof el === 'string') {
             var els = document.querySelectorAll(el);
@@ -15,27 +16,31 @@
         return el;
     }
     var txt = "innerText" in HTMLElement.prototype ? "innerText" : "textContent";
-    var scannerLaser = new Q(".scanner-laser"),
-        imageUrl =new  Q("#image-url"),
-        play = new Q("#play"),
-        scannedImg = new Q("#scanned-img"),
-        scannedQR = new Q("#scanned-QR"),
-        grabImg = new Q("#grab-img"),
-        decodeLocal = new Q("#decode-img"),
-        pause = new Q("#pause"),
-        stop = new Q("#stop"),
-        contrast = new Q("#contrast"),
-        contrastValue = new Q("#contrast-value"),
-        zoom = new Q("#zoom"),
-        zoomValue = new Q("#zoom-value"),
-        brightness = new Q("#brightness"),
-        brightnessValue = new Q("#brightness-value"),
-        threshold = new Q("#threshold"),
-        thresholdValue = new Q("#threshold-value"),
-        sharpness = new Q("#sharpness"),
-        sharpnessValue = new Q("#sharpness-value"),
-        grayscale = new Q("#grayscale"),
-        grayscaleValue = new Q("#grayscale-value");
+    var scannerLaser = Q(".scanner-laser"),
+        imageUrl = new Q("#image-url"),
+        play = Q("#play"),
+        scannedImg = Q("#scanned-img"),
+        scannedQR = Q("#scanned-QR"),
+        grabImg = Q("#grab-img"),
+        decodeLocal = Q("#decode-img"),
+        pause = Q("#pause"),
+        stop = Q("#stop"),
+        contrast = Q("#contrast"),
+        contrastValue = Q("#contrast-value"),
+        zoom = Q("#zoom"),
+        zoomValue = Q("#zoom-value"),
+        brightness = Q("#brightness"),
+        brightnessValue = Q("#brightness-value"),
+        threshold = Q("#threshold"),
+        thresholdValue = Q("#threshold-value"),
+        sharpness = Q("#sharpness"),
+        sharpnessValue = Q("#sharpness-value"),
+        grayscale = Q("#grayscale"),
+        grayscaleValue = Q("#grayscale-value"),
+        flipVertical = Q("#flipVertical"),
+        flipVerticalValue = Q("#flipVertical-value"),
+        flipHorizontal = Q("#flipHorizontal"),
+        flipHorizontalValue = Q("#flipHorizontal-value");
     var args = {
         autoBrightnessValue: 100,
         resultFunction: function(text, imgSrc) {
@@ -142,6 +147,30 @@
             } else {
                 sharpnessValue[txt] = sharpnessValue[txt].split(":")[0] + ": off";
                 decoder.options.sharpness = [];
+            }
+        }
+    };
+    Page.changeVertical = function() {
+        if (decoder.isInitialized()) {
+            var value = flipVertical.checked;
+            if (value) {
+                flipVerticalValue[txt] = flipVerticalValue[txt].split(":")[0] + ": on";
+                decoder.options.flipVertical = value;
+            } else {
+                flipVerticalValue[txt] = flipVerticalValue[txt].split(":")[0] + ": off";
+                decoder.options.flipVertical = value;
+            }
+        }
+    };
+    Page.changeHorizontal = function() {
+        if (decoder.isInitialized()) {
+            var value = flipHorizontal.checked;
+            if (value) {
+                flipHorizontalValue[txt] = flipHorizontalValue[txt].split(":")[0] + ": on";
+                decoder.options.flipHorizontal = value;
+            } else {
+                flipHorizontalValue[txt] = flipHorizontalValue[txt].split(":")[0] + ": off";
+                decoder.options.flipHorizontal = value;
             }
         }
     };

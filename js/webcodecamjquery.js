@@ -163,14 +163,6 @@
                 }
                 $(display).attr('width', w);
                 $(display).attr('height', h);
-                if (Self.options.flipHorizontal) {
-                    con.scale(-1, 1);
-                    con.translate(-w, 0);
-                }
-                if (Self.options.flipVertical) {
-                    con.scale(1, -1);
-                    con.translate(0, -h);
-                }
                 isStreaming = true;
                 if (Self.options.decodeQRCodeRate || Self.options.decodeBarCodeRate) {
                     delay();
@@ -179,31 +171,31 @@
         });
         $(video).on('play', function() {
             setInterval(function() {
-                if (video.paused || video.ended) {
-                    return;
+                if (!video.paused && !video.ended) {
+                    display.style.transform = 'scale(' + (Self.options.flipHorizontal ? '-1' : '1') + ', ' + (Self.options.flipVertical ? '-1' : '1') + ')';
+                    var z = Self.options.zoom;
+                    if (z < 0) {
+                        z = optimalZoom();
+                    }
+                    con.drawImage(video, (w * z - w) / -2, (h * z - h) / -2, w * z, h * z);
+                    var imageData = con.getImageData(0, 0, w, h);
+                    if (Self.options.grayScale) {
+                        imageData = grayScale(imageData);
+                    }
+                    if (Self.options.brightness !== 0 || Self.options.autoBrightnessValue) {
+                        imageData = brightness(imageData, Self.options.brightness);
+                    }
+                    if (Self.options.contrast !== 0) {
+                        imageData = contrast(imageData, Self.options.contrast);
+                    }
+                    if (Self.options.threshold !== 0) {
+                        imageData = threshold(imageData, Self.options.threshold);
+                    }
+                    if (Self.options.sharpness.length !== 0) {
+                        imageData = convolute(imageData, Self.options.sharpness);
+                    }
+                    con.putImageData(imageData, 0, 0);
                 }
-                var z = Self.options.zoom;
-                if (z < 0) {
-                    z = optimalZoom();
-                }
-                con.drawImage(video, (w * z - w) / -2, (h * z - h) / -2, w * z, h * z);
-                var imageData = con.getImageData(0, 0, w, h);
-                if (Self.options.grayScale) {
-                    imageData = grayScale(imageData);
-                }
-                if (Self.options.brightness !== 0 || Self.options.autoBrightnessValue) {
-                    imageData = brightness(imageData, Self.options.brightness);
-                }
-                if (Self.options.contrast !== 0) {
-                    imageData = contrast(imageData, Self.options.contrast);
-                }
-                if (Self.options.threshold !== 0) {
-                    imageData = threshold(imageData, Self.options.threshold);
-                }
-                if (Self.options.sharpness.length !== 0) {
-                    imageData = convolute(imageData, Self.options.sharpness);
-                }
-                con.putImageData(imageData, 0, 0);
             }, 1E3 / Self.options.frameRate);
         });
     }
