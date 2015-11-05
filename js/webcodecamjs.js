@@ -222,9 +222,9 @@ var WebCodeCamJS = function(element) {
         };
         qrcode.callback = function(a) {
             if (localImage || (!delayBool && !video.paused)) {
+                sucessLocalDecode = true;
                 delayBool = true;
                 delay();
-                sucessLocalDecode = true;
                 beep();
                 setTimeout(function() {
                     options.resultFunction(a, lastImageSrc);
