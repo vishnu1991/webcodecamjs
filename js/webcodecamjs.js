@@ -139,6 +139,12 @@ var WebCodeCamJS = function(element) {
         video.pause();
     }
 
+    function beep() {
+        if (options.beep) {
+            beepSound.play();
+        }
+    }
+
     function cameraSuccess(stream) {
         localStream = stream;
         video.streamSrc(stream);
@@ -200,9 +206,9 @@ var WebCodeCamJS = function(element) {
             if (localImage || (!delayBool && !video.paused)) {
                 if (e.data.success && e.data.result[0].length > 1 && e.data.result[0].indexOf('undefined') == -1) {
                     sucessLocalDecode = true;
-                    beepSound.play();
                     delayBool = true;
                     delay();
+                    beep();
                     setTimeout(function() {
                         options.resultFunction(e.data.result[0], lastImageSrc);
                     }, 0);
@@ -216,10 +222,10 @@ var WebCodeCamJS = function(element) {
         };
         qrcode.callback = function(a) {
             if (localImage || (!delayBool && !video.paused)) {
-                beepSound.play();
                 delayBool = true;
                 delay();
                 sucessLocalDecode = true;
+                beep();
                 setTimeout(function() {
                     options.resultFunction(a, lastImageSrc);
                 }, 0);
@@ -523,7 +529,9 @@ var WebCodeCamJS = function(element) {
             con = display.getContext('2d');
             if (opt) {
                 options = mergeRecursive(options, opt);
-                beepSound = new Audio(options.beep);
+                if (options.beep) {
+                    beepSound = new Audio(options.beep);
+                }
             }
             display.width = w = options.width;
             display.height = h = options.height;
