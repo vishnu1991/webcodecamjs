@@ -222,7 +222,6 @@
                     beep();
                     delayBool = true;
                     delay();
-                    beep();
                     setTimeout(function() {
                         Self.options.resultFunction(e.data.result[0], lastImageSrc);
                     }, 0);
@@ -236,11 +235,10 @@
         };
         qrcode.callback = function(a) {
             if (localImage || (!delayBool && !video.paused)) {
+                sucessLocalDecode = true;
                 beep();
                 delayBool = true;
                 delay();
-                sucessLocalDecode = true;
-                beep();
                 setTimeout(function() {
                     Self.options.resultFunction(a, lastImageSrc);
                 }, 0);
