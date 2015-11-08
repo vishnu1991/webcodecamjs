@@ -8,14 +8,17 @@
     </head>
     <body>
         <div class="page-header text-center">
-            <h1 style="color: cadetblue;">WebCodeCamJS 1.9.0 <br>&amp;<br>
-                                          WebCodeCamJQuery 1.9.0<br>
+            <h1 style="color: cadetblue;">WebCodeCamJS 2.0.0 <br>&amp;<br>
+                                          WebCodeCamJQuery 2.0.0<br>
                 <small>Download from:
                     <a href="https://github.com/andrastoth/WebCodeCamJS" target="_blank"> GitHub </a> Or 
                     <a href="http://www.jsclasses.org/package/446-JavaScript-Qr-and-barcode-decoder.html" target="_blank"> JSclasses </a>
                 </small>
             </h1>
             <p style="font-style: italic;">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                News in this version 2.0.0: Add UPC-A, UPC-E support.
+                <span class="glyphicon glyphicon-info-sign"></span><br>
                 <span class="glyphicon glyphicon-info-sign"></span>
                 News in this version 1.9.0: Decode from url.
                 <span class="glyphicon glyphicon-info-sign"></span><br>
@@ -36,7 +39,7 @@
         </div>
         <div class="container text-center">
             <h2>Compatibility Table</h2>
-            <p>Current state of browser compatibility 2015-08-06</p>
+            <p>Current state of browser compatibility 2015-10-01</p>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -67,6 +70,15 @@
                         <td class="success">Yes</td>
                         <td class="warning">Partial but selectable<br> on built in pop up window</td>
                         <td class="warning">Partial but selectable<br> on built in pop up window</td>
+                    </tr>
+                    <tr>
+                        <td><strong><a>Decode image(url/local)</a></strong></td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
                     </tr>
                 </tbody>
             </table>
@@ -111,6 +123,11 @@
                             <input id="sharpness" onchange="Page.changeSharpness();" type="checkbox">
                             <label id="grayscale-value" width="100">grayscale: off</label>
                             <input id="grayscale" onchange="Page.changeGrayscale();" type="checkbox">
+                            <br>
+                            <label id="flipVertical-value" width="100">Flip Vertical: off</label>
+                            <input id="flipVertical" onchange="Page.changeVertical();" type="checkbox">
+                            <label id="flipHorizontal-value" width="100">Flip Horizontal: off</label>
+                            <input id="flipHorizontal" onchange="Page.changeHorizontal();" type="checkbox">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -127,7 +144,7 @@
                 </div>
                 <div class="panel-footer">
                     <h3>Required HTML &amp; Javascript example</h3>
-<!-- HTML generated using hilite.me --><div style="background: #272822; overflow:auto;width:auto;height:400px;"><pre style="margin: 0; line-height: 125%"><span style="color: #75715e">&lt;!DOCTYPE html&gt;</span>
+<!-- HTML generated using hilite.me --><div style="background: #272822; overflow:auto;width:auto;padding:0;height:400px;"><pre style="margin: 0; line-height: 125%"><span style="color: #75715e">&lt;!DOCTYPE html&gt;</span>
 <span style="color: #f92672">&lt;html&gt;</span>
     <span style="color: #f92672">&lt;head&gt;</span>
         <span style="color: #f92672">&lt;meta</span> <span style="color: #a6e22e">charset=</span><span style="color: #e6db74">&quot;UTF-8&quot;</span><span style="color: #f92672">&gt;</span>
@@ -144,15 +161,20 @@
         <span style="color: #75715e">&lt;!-- </span>
 <span style="color: #75715e">            Using jquery version:</span>
 <span style="color: #75715e">            &lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.js&quot;&gt;&lt;/script&gt;</span>
-<span style="color: #75715e">           &lt;script type=&quot;text/javascript&quot; src=&quot;js/qrcodelib.js&quot;&gt;&lt;/script&gt;</span>
+<span style="color: #75715e">            &lt;script type=&quot;text/javascript&quot; src=&quot;js/qrcodelib.js&quot;&gt;&lt;/script&gt;</span>
 <span style="color: #75715e">            &lt;script type=&quot;text/javascript&quot; src=&quot;js/webcodecamjquery.js&quot;&gt;&lt;/script&gt;</span>
 <span style="color: #75715e">        --&gt;</span>
         <span style="color: #f92672">&lt;script </span><span style="color: #a6e22e">type=</span><span style="color: #e6db74">&quot;text/javascript&quot;</span><span style="color: #f92672">&gt;</span>
             <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">txt</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;innerText&quot;</span> <span style="color: #66d9ef">in</span> <span style="color: #a6e22e">HTMLElement</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">prototype</span> <span style="color: #f92672">?</span> <span style="color: #e6db74">&quot;innerText&quot;</span> <span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;textContent&quot;</span><span style="color: #f8f8f2">;</span>
             <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">arg</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span>
-                <span style="color: #a6e22e">resultFunction</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">resText</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">lastImageSrc</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+                <span style="color: #a6e22e">resultFunction</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">result</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+                    <span style="color: #75715e">/*</span>
+<span style="color: #75715e">                            result.format: code format,</span>
+<span style="color: #75715e">                            result.code: decoded string,</span>
+<span style="color: #75715e">                            result.imgData: decoded image data</span>
+<span style="color: #75715e">                   */</span>
                     <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">aChild</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">document.</span><span style="color: #a6e22e">createElement</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;li&#39;</span><span style="color: #f8f8f2">);</span>
-                    <span style="color: #a6e22e">aChild</span><span style="color: #f8f8f2">[</span><span style="color: #a6e22e">txt</span><span style="color: #f8f8f2">]</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">resText</span><span style="color: #f8f8f2">;</span>
+                    <span style="color: #a6e22e">aChild</span><span style="color: #f8f8f2">[</span><span style="color: #a6e22e">txt</span><span style="color: #f8f8f2">]</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">result</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">format</span> <span style="color: #f92672">+</span> <span style="color: #e6db74">&#39;: &#39;</span> <span style="color: #f92672">+</span> <span style="color: #a6e22e">result</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">code</span><span style="color: #f8f8f2">;</span>
                     <span style="color: #f8f8f2">document.</span><span style="color: #a6e22e">querySelector</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;body&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">appendChild</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">aChild</span><span style="color: #f8f8f2">);</span>
                 <span style="color: #f8f8f2">}</span>
             <span style="color: #f8f8f2">};</span>
@@ -217,7 +239,7 @@
     <span style="color: #75715e">/* Chrome &amp; Spartan: build select menu, return decoder object</span>
 <span style="color: #75715e">    *  Firefox: the default camera initializes, return decoder object </span>
 <span style="color: #75715e">    */</span>
-    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;select&#39;</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">index</span><span style="color: #f8f8f2">);</span> <span style="color: #75715e">//index : default camera index optional</span>
     <span style="color: #75715e">//init with arguments, return decoder object</span>
     <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">args</span><span style="color: #f8f8f2">);</span>
     <span style="color: #75715e">/*OR with defaults*/</span>
@@ -232,7 +254,7 @@
     <span style="color: #75715e">/* Chrome &amp; Spartan: build select menu</span>
 <span style="color: #75715e">    *  Firefox: the default camera initializes, return decoder object </span>
 <span style="color: #75715e">    */</span>
-    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;#camera-select&quot;</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">index</span><span style="color: #f8f8f2">);</span> <span style="color: #75715e">//index : default camera index optional</span>
     <span style="color: #75715e">//simple initialization</span>
     <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">();</span>
 
@@ -245,7 +267,7 @@
     <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">getLastImageSrc</span><span style="color: #f8f8f2">();</span>
     <span style="color: #75715e">/* decode local image */</span>
     <span style="color: #75715e">/* if url is defined download image before staring open process */</span>
-    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">decodeLocalImage</span><span style="color: #f8f8f2">(url);</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">decodeLocalImage</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">url</span><span style="color: #f8f8f2">);</span>
     <span style="color: #75715e">/* get optimal zoom */</span>
     <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">getOptimalZoom</span><span style="color: #f8f8f2">();</span>
     <span style="color: #75715e">/* Configurable options */</span>

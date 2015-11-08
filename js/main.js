@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJS 1.9.1 javascript Bar code and QR code decoder 
+ * WebCodeCamJS 2.0.0 javascript Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -43,15 +43,15 @@
         flipHorizontalValue = Q("#flipHorizontal-value");
     var args = {
         autoBrightnessValue: 100,
-        resultFunction: function(text, imgSrc) {
+        resultFunction: function(res) {
             [].forEach.call(scannerLaser, function(el) {
                 fadeOut(el, 0.5);
                 setTimeout(function() {
                     fadeIn(el, 0.5);
                 }, 300);
             });
-            scannedImg.src = imgSrc;
-            scannedQR[txt] = text;
+            scannedImg.src = res.imgData;
+            scannedQR[txt] = res.format + ': ' + res.code;
         },
         getDevicesError: function(error) {
             var p, message = "Error detected with the following parameters:\n";

@@ -23,6 +23,13 @@ Advantages compared to the previous version:<br>
 Version
 ----
 
+2.0.0
+
+    - Add UPC-A, UPC-E support, result function return value changed!
+
+Version
+----
+
 1.9.1
 
     - Add default cameraindex parameter to buildSelectMenu, optional
@@ -100,9 +107,14 @@ Required HTML & Javascript example
         <script type="text/javascript">
             var txt = "innerText" in HTMLElement.prototype ? "innerText" : "textContent";
             var arg = {
-                resultFunction: function(resText, lastImageSrc) {
+                resultFunction: function(result) {
+                    /*
+                        result.format: code format,
+                        result.code: decoded string,
+                        result.imgData: decoded image data
+                    */
                     var aChild = document.createElement('li');
-                    aChild[txt] = resText;
+                    aChild[txt] = result.format + ': ' + result.code;
                     document.querySelector('body').appendChild(aChild);
                 }
             };

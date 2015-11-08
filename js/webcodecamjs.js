@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJS 1.9.2 javascript Bar code and QR code decoder 
+ * WebCodeCamJS 2.0.0 javascript Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -9,7 +9,7 @@ var WebCodeCamJS = function(element) {
     'use strict';
     this.Version = {
         name: 'WebCodeCamJS',
-        version: '1.9.2',
+        version: '2.0.0',
         author: 'Tóth András'
     };
     var mediaDevices = (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) ? navigator.mediaDevices : ((navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) ? {
@@ -42,7 +42,7 @@ var WebCodeCamJS = function(element) {
         localStream = null,
         options = {
             decodeQRCodeRate: 5,
-            decodeBarCodeRate: 5,
+            decodeBarCodeRate: 3,
             frameRate: 15,
             width: 320,
             height: 240,
@@ -173,7 +173,6 @@ var WebCodeCamJS = function(element) {
         video.addEventListener('play', function() {
             setInterval(function() {
                 if (!video.paused && !video.ended) {
-                    display.style.transform = 'scale(' + (options.flipHorizontal ? '-1' : '1') + ', ' + (options.flipVertical ? '-1' : '1') + ')';
                     var z = options.zoom;
                     if (z < 0) {
                         z = optimalZoom();
@@ -204,17 +203,22 @@ var WebCodeCamJS = function(element) {
     function setCallBack() {
         DecodeWorker.onmessage = function(e) {
             if (localImage || (!delayBool && !video.paused)) {
-                if (e.data.success && e.data.result[0].length > 1 && e.data.result[0].indexOf('undefined') == -1) {
+                if (e.data.success === true && e.data.success != 'localization') {
                     sucessLocalDecode = true;
                     delayBool = true;
                     delay();
                     beep();
                     setTimeout(function() {
-                        options.resultFunction(e.data.result[0], lastImageSrc);
+                        options.resultFunction({
+                            format: e.data.result[0].Format,
+                            code: e.data.result[0].Value,
+                            imgData: lastImageSrc
+                        });
                     }, 0);
-                } else if (e.data.finished && options.decodeBarCodeRate) {
+                }
+                if ((!sucessLocalDecode || !localImage) && e.data.success != 'localization') {
                     flipped = !flipped;
-                    if (!sucessLocalDecode || !localImage) {
+                    if (!localImage) {
                         setTimeout(tryParseBarCode, 1E3 / options.decodeBarCodeRate);
                     }
                 }
@@ -227,26 +231,33 @@ var WebCodeCamJS = function(element) {
                 delay();
                 beep();
                 setTimeout(function() {
-                    options.resultFunction(a, lastImageSrc);
+                    options.resultFunction({
+                        format: 'QR Code',
+                        code: a,
+                        imgData: lastImageSrc
+                    });
                 }, 0);
             }
         };
     }
 
     function tryParseBarCode() {
+        display.style.transform = 'scale(' + (options.flipHorizontal ? '-1' : '1') + ', ' + (options.flipVertical ? '-1' : '1') + ')';
         var flipMode = flipped === true ? 'flip' : 'normal';
         lastImageSrc = display.toDataURL();
         DecodeWorker.postMessage({
-            ImageData: con.getImageData(0, 0, w, h).data,
-            Width: w,
-            Height: h,
+            scan: con.getImageData(0, 0, w, h).data,
+            scanWidth: w,
+            scanHeight: h,
+            multiple: false,
+            decodeFormats: ["Code128", "Code93", "Code39", "EAN-13", "2Of5", "Inter2Of5", "Codabar"],
             cmd: flipMode,
-            DecodeNr: 1,
-            LowLight: false
+            rotation: 1
         });
     }
 
     function tryParseQRCode() {
+        display.style.transform = 'scale(' + (options.flipHorizontal ? '-1' : '1') + ', ' + (options.flipVertical ? '-1' : '1') + ')';
         try {
             lastImageSrc = display.toDataURL();
             qrcode.decode();

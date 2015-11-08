@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJQuery 1.9.2 jQuery plugin Bar code and QR code decoder 
+ * WebCodeCamJQuery 2.0.0 jQuery plugin Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -169,14 +169,6 @@
                 }
                 $(display).attr('width', w);
                 $(display).attr('height', h);
-                if (Self.options.flipHorizontal) {
-                    con.scale(-1, 1);
-                    con.translate(-w, 0);
-                }
-                if (Self.options.flipVertical) {
-                    con.scale(1, -1);
-                    con.translate(0, -h);
-                }
                 isStreaming = true;
                 if (Self.options.decodeQRCodeRate || Self.options.decodeBarCodeRate) {
                     delay();
@@ -217,17 +209,22 @@
     function setCallBack() {
         DecodeWorker.onmessage = function(e) {
             if (localImage || (!delayBool && !video.paused)) {
-                if (e.data.success && e.data.result[0].length > 1 && e.data.result[0].indexOf('undefined') == -1) {
+                if (e.data.success === true && e.data.success != 'localization') {
                     sucessLocalDecode = true;
-                    beep();
                     delayBool = true;
                     delay();
+                    beep();
                     setTimeout(function() {
-                        Self.options.resultFunction(e.data.result[0], lastImageSrc);
+                        Self.options.resultFunction({
+                            format: e.data.result[0].Format,
+                            code: e.data.result[0].Value,
+                            imgData: lastImageSrc
+                        });
                     }, 0);
-                } else if (e.data.finished && Self.options.decodeBarCodeRate) {
+                }
+                if ((!sucessLocalDecode || !localImage) && e.data.success != 'localization') {
                     flipped = !flipped;
-                    if (!sucessLocalDecode || !localImage) {
+                    if (!localImage) {
                         setTimeout(tryParseBarCode, 1E3 / Self.options.decodeBarCodeRate);
                     }
                 }
@@ -236,30 +233,41 @@
         qrcode.callback = function(a) {
             if (localImage || (!delayBool && !video.paused)) {
                 sucessLocalDecode = true;
-                beep();
                 delayBool = true;
                 delay();
+                beep();
                 setTimeout(function() {
-                    Self.options.resultFunction(a, lastImageSrc);
+                    Self.options.resultFunction({
+                        format: 'QR Code',
+                        code: a,
+                        imgData: lastImageSrc
+                    });
                 }, 0);
             }
         };
     }
 
     function tryParseBarCode() {
+        $(display).css({
+            'transform': 'scale(' + (Self.options.flipHorizontal ? '-1' : '1') + ', ' + (Self.options.flipVertical ? '-1' : '1') + ')'
+        });
         var flipMode = flipped === true ? 'flip' : 'normal';
         lastImageSrc = display.toDataURL();
         DecodeWorker.postMessage({
-            ImageData: con.getImageData(0, 0, w, h).data,
-            Width: w,
-            Height: h,
+            scan: con.getImageData(0, 0, w, h).data,
+            scanWidth: w,
+            scanHeight: h,
+            multiple: false,
+            decodeFormats: ["Code128", "Code93", "Code39", "EAN-13", "2Of5", "Inter2Of5", "Codabar"],
             cmd: flipMode,
-            DecodeNr: 1,
-            LowLight: false
+            rotation: 1
         });
     }
 
     function tryParseQRCode() {
+        $(display).css({
+            'transform': 'scale(' + (Self.options.flipHorizontal ? '-1' : '1') + ', ' + (Self.options.flipVertical ? '-1' : '1') + ')'
+        });
         try {
             lastImageSrc = display.toDataURL();
             qrcode.decode();
