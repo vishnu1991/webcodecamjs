@@ -1485,18 +1485,14 @@ function DecodeCodaBar(string) {
     return result;
 }
 
-function checkResultForUPC(number, n) {
-    var str = number.toString(),
-        sumEven = 0,
-        sumOdd = 0,
-        sum = 0;
-    if (!isNaN(str) && str.length == 13) {
-        for (var i = n; i < str.length - (n ? 0 : 1); i++) {
-            if (i & 1) sumOdd += parseInt(str.charAt(i), 10);
-            else sumEven += parseInt(str.charAt(i), 10);
-        }
-        sum = 10 - ((sumOdd + sumEven * 3) % 10);
+function checkResultForEAN(resultArray) {
+    var weight = 3;
+    var sum = 0;
+    for (var i = resultArray.length - 2; i >= 0; i--) {
+        sum += resultArray[i] * weight;
+        weight = weight === 3 ? 1 : 3;
     }
+    sum = (10 - sum % 10) % 10;
     return sum;
 }
 
@@ -1561,7 +1557,7 @@ function DecodeEAN13(string) {
         }
     }
     if (trigger) return false;
-    var sum = md ? resultArray[0] : checkResultForUPC(resultArray.join(""), 1);
+    var sum = md ? resultArray[0] : checkResultForEAN(resultArray.join(""), 1);
     if (resultArray[resultArray.length - 1] == sum || resultArray[0] == sum) {
         return resultArray.join("");
     } else {
@@ -1714,10 +1710,6 @@ function checkFinalResult(result) {
             if (result[i].Value.length === 7) {
                 result[i].Value = result[i].Value.substring(1, 7);
                 result[i].Format = 'UPC-E';
-            }
-            if (result[i].Value.length === 13 && checkResultForUPC(result[i].Value, 1) === parseInt(result[i].Value.substring(12))) {
-                result[i].Value = result[i].Value.substring(1, 12);
-                result[i].Format = 'UPC-A';
             }
         }
     }
