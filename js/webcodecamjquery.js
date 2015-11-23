@@ -26,7 +26,7 @@
         this.src = !!stream ? (window.URL || window.webkitURL).createObjectURL(stream) : new String();
     };
     var Self, display, videoSelect, lastImageSrc, con, beepSound, w, h,
-        DecodeWorker = new Worker('js/DecoderWorker.js'),
+        DecodeWorker = null,
         video = $('<video muted autoplay></video>')[0],
         sucessLocalDecode = false,
         localImage = false,
@@ -57,6 +57,7 @@
             flipHorizontal: false,
             zoom: -1,
             beep: 'audio/beep.mp3',
+            decoderWorker: 'js/DecoderWorker.js',
             brightness: 0,
             autoBrightnessValue: false,
             grayScale: false,
@@ -511,6 +512,7 @@
                 qrcode.sourceCanvas = display;
                 initialized = true;
                 setEventListeners();
+                DecodeWorker = new Worker(options.decoderWorker);
                 if (this.options.beep) {
                     beepSound = new Audio(this.options.beep);
                 }

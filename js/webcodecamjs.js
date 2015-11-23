@@ -31,7 +31,7 @@ var WebCodeCamJS = function(element) {
     };
     var videoSelect, lastImageSrc, con, beepSound, w, h;
     var display = Q(element),
-        DecodeWorker = new Worker('js/DecoderWorker.js'),
+        DecodeWorker = null,
         video = html('<video muted autoplay></video>'),
         sucessLocalDecode = false,
         localImage = false,
@@ -62,6 +62,7 @@ var WebCodeCamJS = function(element) {
             flipHorizontal: false,
             zoom: -1,
             beep: 'audio/beep.mp3',
+            decoderWorker: 'js/DecoderWorker.js',
             brightness: 0,
             autoBrightnessValue: false,
             grayScale: false,
@@ -549,6 +550,7 @@ var WebCodeCamJS = function(element) {
             qrcode.sourceCanvas = display;
             initialized = true;
             setEventListeners();
+            DecodeWorker = new Worker(options.decoderWorker);
             if (options.decodeQRCodeRate || options.decodeBarCodeRate) {
                 setCallBack();
             }
