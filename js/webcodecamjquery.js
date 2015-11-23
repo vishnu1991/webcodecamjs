@@ -512,7 +512,7 @@
                 qrcode.sourceCanvas = display;
                 initialized = true;
                 setEventListeners();
-                DecodeWorker = new Worker(options.decoderWorker);
+                DecodeWorker = new Worker(this.options.decoderWorker);
                 if (this.options.beep) {
                     beepSound = new Audio(this.options.beep);
                 }
