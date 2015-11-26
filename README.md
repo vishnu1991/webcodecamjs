@@ -137,15 +137,16 @@ Required HTML & Javascript example
             },
             audio: false
         },
-        flipVertical: false,            // boolean
-        flipHorizontal: false,          // boolean
-        zoom: -1,                       // if zoom = -1, auto zoom for optimal resolution else int
-        beep: "js/beep.mp3",            // string, audio file location
-        brightness: 0,                  // int
-        autoBrightnessValue: false,     // functional when value autoBrightnessValue is int
-        grayScale: false,               // boolean
-        contrast: 0,                    // int
-        threshold: 0,                   // int 
+        flipVertical: false,                    // boolean
+        flipHorizontal: false,                  // boolean
+        zoom: -1,                               // if zoom = -1, auto zoom for optimal resolution else int
+        beep: "js/beep.mp3",                    // string, audio file location
+        decoderWorker: 'js/DecoderWorker.js',   // string, DecoderWorker file location
+        brightness: 0,                          // int
+        autoBrightnessValue: false,             // functional when value autoBrightnessValue is int
+        grayScale: false,                       // boolean
+        contrast: 0,                            // int
+        threshold: 0,                           // int 
         sharpness: [],                  // to On declare matrix, example for sharpness ->  [0, -1, 0, -1, 5, -1, 0, -1, 0]
         resultFunction: function(resText, lastImageSrc) { //resText as decoded code, lastImageSrc as image source
             console.log(resText);
