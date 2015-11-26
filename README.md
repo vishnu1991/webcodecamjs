@@ -140,7 +140,7 @@ Required HTML & Javascript example
         flipVertical: false,                    // boolean
         flipHorizontal: false,                  // boolean
         zoom: -1,                               // if zoom = -1, auto zoom for optimal resolution else int
-        beep: "js/beep.mp3",                    // string, audio file location
+        beep: 'audio/beep.mp3',                 // string, audio file location
         decoderWorker: 'js/DecoderWorker.js',   // string, DecoderWorker file location
         brightness: 0,                          // int
         autoBrightnessValue: false,             // functional when value autoBrightnessValue is int
