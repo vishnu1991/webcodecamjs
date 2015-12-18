@@ -23,6 +23,14 @@ Advantages compared to the previous version:<br>
 Version
 ----
 
+2.0.1
+
+    - Add parameter successTimeout to options
+    - Add parameter codeRepetition to options
+
+Version
+----
+
 2.0.0
 
     - Add UPC-A, UPC-E support, result function return value changed!
@@ -122,6 +130,8 @@ Required HTML & Javascript example
     var options = {
         DecodeQRCodeRate: 5,            // null to disable OR int > 0 !
         DecodeBarCodeRate: 5,           // null to disable OR int > 0 !
+        successTimeout: 500,            // delay time when decoding is succeed
+        codeRepetition: true,           // accept code repetition true or false
         frameRate: 15,                  // 1 - 25
         width: 320,                     // canvas width
         height: 240,                    // canvas height

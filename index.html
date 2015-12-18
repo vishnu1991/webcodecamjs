@@ -8,14 +8,17 @@
     </head>
     <body>
         <div class="page-header text-center">
-            <h1 style="color: cadetblue;">WebCodeCamJS 2.0.0 <br>&amp;<br>
-                                          WebCodeCamJQuery 2.0.0<br>
+            <h1 style="color: cadetblue;">WebCodeCamJS 2.0.1 <br>&amp;<br>
+                                          WebCodeCamJQuery 2.0.1<br>
                 <small>Download from:
                     <a href="https://github.com/andrastoth/WebCodeCamJS" target="_blank"> GitHub </a> Or 
                     <a href="http://www.jsclasses.org/package/446-JavaScript-Qr-and-barcode-decoder.html" target="_blank"> JSclasses </a>
                 </small>
             </h1>
             <p style="font-style: italic;">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                News in this version 2.0.1 Add successTimeout, codeRepetition parameters to options
+                <span class="glyphicon glyphicon-info-sign"></span><br>
                 <span class="glyphicon glyphicon-info-sign"></span>
                 News in this version 2.0.0: Add UPC-A, UPC-E support.
                 <span class="glyphicon glyphicon-info-sign"></span><br>
@@ -182,6 +185,8 @@
     <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">options</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span>
         <span style="color: #a6e22e">DecodeQRCodeRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span>            <span style="color: #75715e">// null to disable OR int &gt; 0 !</span>
         <span style="color: #a6e22e">DecodeBarCodeRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span>           <span style="color: #75715e">// null to disable OR int &gt; 0 !</span>
+        <span style="color: #a6e22e">successTimeout</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">500</span><span style="color: #f8f8f2">,</span>            <span style="color: #75715e">// delay time when decoding is succeed</span>
+        <span style="color: #a6e22e">codeRepetition</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">true</span><span style="color: #f8f8f2">,</span>            <span style="color: #75715e">// accept code repetition true or false</span>
         <span style="color: #a6e22e">frameRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">15</span><span style="color: #f8f8f2">,</span>                  <span style="color: #75715e">// 1 - 25</span>
         <span style="color: #a6e22e">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">320</span><span style="color: #f8f8f2">,</span>                     <span style="color: #75715e">// canvas width</span>
         <span style="color: #a6e22e">height</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">240</span><span style="color: #f8f8f2">,</span>                    <span style="color: #75715e">// canvas height</span>

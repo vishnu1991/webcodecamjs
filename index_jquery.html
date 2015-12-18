@@ -8,14 +8,17 @@
     </head>
     <body>
         <div class="page-header text-center">
-            <h1 style="color: cadetblue;">WebCodeCamJS 2.0.0 <br>&amp;<br>
-                                          WebCodeCamJQuery 2.0.0<br>
+            <h1 style="color: cadetblue;">WebCodeCamJS 2.0.1 <br>&amp;<br>
+                                          WebCodeCamJQuery 2.0.1<br>
                 <small>Download from:
                     <a href="https://github.com/andrastoth/WebCodeCamJS" target="_blank"> GitHub </a> Or 
                     <a href="http://www.jsclasses.org/package/446-JavaScript-Qr-and-barcode-decoder.html" target="_blank"> JSclasses </a>
                 </small>
             </h1>
             <p style="font-style: italic;">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                News in this version 2.0.1 Add successTimeout, codeRepetition parameters to options
+                <span class="glyphicon glyphicon-info-sign"></span><br>
                 <span class="glyphicon glyphicon-info-sign"></span>
                 News in this version 2.0.0: Add UPC-A, UPC-E support.
                 <span class="glyphicon glyphicon-info-sign"></span><br>
@@ -161,7 +164,7 @@
         <span style="color: #75715e">&lt;!-- </span>
 <span style="color: #75715e">            Using jquery version:</span>
 <span style="color: #75715e">            &lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.js&quot;&gt;&lt;/script&gt;</span>
-<span style="color: #75715e">            &lt;script type=&quot;text/javascript&quot; src=&quot;js/qrcodelib.js&quot;&gt;&lt;/script&gt;</span>
+<span style="color: #75715e">           &lt;script type=&quot;text/javascript&quot; src=&quot;js/qrcodelib.js&quot;&gt;&lt;/script&gt;</span>
 <span style="color: #75715e">            &lt;script type=&quot;text/javascript&quot; src=&quot;js/webcodecamjquery.js&quot;&gt;&lt;/script&gt;</span>
 <span style="color: #75715e">        --&gt;</span>
         <span style="color: #f92672">&lt;script </span><span style="color: #a6e22e">type=</span><span style="color: #e6db74">&quot;text/javascript&quot;</span><span style="color: #f92672">&gt;</span>
@@ -169,10 +172,10 @@
             <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">arg</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span>
                 <span style="color: #a6e22e">resultFunction</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">result</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
                     <span style="color: #75715e">/*</span>
-<span style="color: #75715e">                            result.format: code format,</span>
-<span style="color: #75715e">                            result.code: decoded string,</span>
-<span style="color: #75715e">                            result.imgData: decoded image data</span>
-<span style="color: #75715e">                   */</span>
+<span style="color: #75715e">                        result.format: code format,</span>
+<span style="color: #75715e">                        result.code: decoded string,</span>
+<span style="color: #75715e">                        result.imgData: decoded image data</span>
+<span style="color: #75715e">                    */</span>
                     <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">aChild</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">document.</span><span style="color: #a6e22e">createElement</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;li&#39;</span><span style="color: #f8f8f2">);</span>
                     <span style="color: #a6e22e">aChild</span><span style="color: #f8f8f2">[</span><span style="color: #a6e22e">txt</span><span style="color: #f8f8f2">]</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">result</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">format</span> <span style="color: #f92672">+</span> <span style="color: #e6db74">&#39;: &#39;</span> <span style="color: #f92672">+</span> <span style="color: #a6e22e">result</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">code</span><span style="color: #f8f8f2">;</span>
                     <span style="color: #f8f8f2">document.</span><span style="color: #a6e22e">querySelector</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;body&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">appendChild</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">aChild</span><span style="color: #f8f8f2">);</span>
@@ -182,6 +185,8 @@
     <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">options</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span>
         <span style="color: #a6e22e">DecodeQRCodeRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span>            <span style="color: #75715e">// null to disable OR int &gt; 0 !</span>
         <span style="color: #a6e22e">DecodeBarCodeRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span>           <span style="color: #75715e">// null to disable OR int &gt; 0 !</span>
+        <span style="color: #a6e22e">successTimeout</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">500</span><span style="color: #f8f8f2">,</span>            <span style="color: #75715e">// delay time when decoding is succeed</span>
+        <span style="color: #a6e22e">codeRepetition</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">true</span><span style="color: #f8f8f2">,</span>            <span style="color: #75715e">// accept code repetition true or false</span>
         <span style="color: #a6e22e">frameRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">15</span><span style="color: #f8f8f2">,</span>                  <span style="color: #75715e">// 1 - 25</span>
         <span style="color: #a6e22e">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">320</span><span style="color: #f8f8f2">,</span>                     <span style="color: #75715e">// canvas width</span>
         <span style="color: #a6e22e">height</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">240</span><span style="color: #f8f8f2">,</span>                    <span style="color: #75715e">// canvas height</span>
@@ -197,15 +202,16 @@
             <span style="color: #f8f8f2">},</span>
             <span style="color: #a6e22e">audio</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span>
         <span style="color: #f8f8f2">},</span>
-        <span style="color: #a6e22e">flipVertical</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">,</span>            <span style="color: #75715e">// boolean</span>
-        <span style="color: #a6e22e">flipHorizontal</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">,</span>          <span style="color: #75715e">// boolean</span>
-        <span style="color: #a6e22e">zoom</span><span style="color: #f92672">:</span> <span style="color: #f92672">-</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span>                       <span style="color: #75715e">// if zoom = -1, auto zoom for optimal resolution else int</span>
-        <span style="color: #a6e22e">beep</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;js/beep.mp3&quot;</span><span style="color: #f8f8f2">,</span>            <span style="color: #75715e">// string, audio file location</span>
-        <span style="color: #a6e22e">brightness</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span>                  <span style="color: #75715e">// int</span>
-        <span style="color: #a6e22e">autoBrightnessValue</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">,</span>     <span style="color: #75715e">// functional when value autoBrightnessValue is int</span>
-        <span style="color: #a6e22e">grayScale</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">,</span>               <span style="color: #75715e">// boolean</span>
-        <span style="color: #a6e22e">contrast</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span>                    <span style="color: #75715e">// int</span>
-        <span style="color: #a6e22e">threshold</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span>                   <span style="color: #75715e">// int </span>
+        <span style="color: #a6e22e">flipVertical</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">,</span>                    <span style="color: #75715e">// boolean</span>
+        <span style="color: #a6e22e">flipHorizontal</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">,</span>                  <span style="color: #75715e">// boolean</span>
+        <span style="color: #a6e22e">zoom</span><span style="color: #f92672">:</span> <span style="color: #f92672">-</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span>                               <span style="color: #75715e">// if zoom = -1, auto zoom for optimal resolution else int</span>
+        <span style="color: #a6e22e">beep</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&#39;audio/beep.mp3&#39;</span><span style="color: #f8f8f2">,</span>                 <span style="color: #75715e">// string, audio file location</span>
+        <span style="color: #a6e22e">decoderWorker</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&#39;js/DecoderWorker.js&#39;</span><span style="color: #f8f8f2">,</span>   <span style="color: #75715e">// string, DecoderWorker file location</span>
+        <span style="color: #a6e22e">brightness</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span>                          <span style="color: #75715e">// int</span>
+        <span style="color: #a6e22e">autoBrightnessValue</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">,</span>             <span style="color: #75715e">// functional when value autoBrightnessValue is int</span>
+        <span style="color: #a6e22e">grayScale</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">,</span>                       <span style="color: #75715e">// boolean</span>
+        <span style="color: #a6e22e">contrast</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span>                            <span style="color: #75715e">// int</span>
+        <span style="color: #a6e22e">threshold</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span>                           <span style="color: #75715e">// int </span>
         <span style="color: #a6e22e">sharpness</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">[],</span>                  <span style="color: #75715e">// to On declare matrix, example for sharpness -&gt;  [0, -1, 0, -1, 5, -1, 0, -1, 0]</span>
         <span style="color: #a6e22e">resultFunction</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">resText</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">lastImageSrc</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span> <span style="color: #75715e">//resText as decoded code, lastImageSrc as image source</span>
             <span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">resText</span><span style="color: #f8f8f2">);</span>

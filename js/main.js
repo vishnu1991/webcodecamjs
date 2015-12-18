@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJS 2.0.0 javascript Bar code and QR code decoder 
+ * WebCodeCamJS 2.0.1 javascript Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com

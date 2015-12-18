@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJQuery 2.0.0 jQuery plugin Bar code and QR code decoder 
+ * WebCodeCamJQuery 2.0.1 jQuery plugin Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -25,7 +25,7 @@
     } : function(stream) {
         this.src = !!stream ? (window.URL || window.webkitURL).createObjectURL(stream) : new String();
     };
-    var Self, display, videoSelect, lastImageSrc, con, beepSound, w, h,
+    var Self, display, videoSelect, lastImageSrc, con, beepSound, w, h, lastCode,
         DecodeWorker = null,
         video = $('<video muted autoplay></video>')[0],
         sucessLocalDecode = false,
@@ -38,6 +38,8 @@
         defaults = {
             decodeQRCodeRate: 5,
             decodeBarCodeRate: 5,
+            successTimeout: 500,
+            codeRepetition: true,
             frameRate: 15,
             width: 320,
             height: 240,
@@ -214,13 +216,16 @@
                     sucessLocalDecode = true;
                     delayBool = true;
                     delay();
-                    beep();
                     setTimeout(function() {
-                        Self.options.resultFunction({
-                            format: e.data.result[0].Format,
-                            code: e.data.result[0].Value,
-                            imgData: lastImageSrc
-                        });
+                        if (Self.options.codeRepetition || lastCode != e.data.result[0].Value) {
+                            beep();
+                            lastCode = e.data.result[0].Value;
+                            Self.options.resultFunction({
+                                format: e.data.result[0].Format,
+                                code: e.data.result[0].Value,
+                                imgData: lastImageSrc
+                            });
+                        }
                     }, 0);
                 }
                 if ((!sucessLocalDecode || !localImage) && e.data.success != 'localization') {
@@ -236,13 +241,16 @@
                 sucessLocalDecode = true;
                 delayBool = true;
                 delay();
-                beep();
                 setTimeout(function() {
-                    Self.options.resultFunction({
-                        format: 'QR Code',
-                        code: a,
-                        imgData: lastImageSrc
-                    });
+                    if (Self.options.codeRepetition || lastCode != e.data.result[0].Value) {
+                        beep();
+                        lastCode = e.data.result[0].Value;
+                        Self.options.resultFunction({
+                            format: 'QR Code',
+                            code: a,
+                            imgData: lastImageSrc
+                        });
+                    }
                 }, 0);
             }
         };
@@ -281,7 +289,7 @@
 
     function delay() {
         if (!localImage) {
-            setTimeout(play, 500, true);
+            setTimeout(play, Self.options.successTimeout, true);
         }
     }
 
