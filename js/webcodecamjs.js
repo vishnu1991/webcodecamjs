@@ -236,9 +236,9 @@ var WebCodeCamJS = function(element) {
                 delayBool = true;
                 delay();
                 setTimeout(function() {
-                    if (options.codeRepetition || lastCode != e.data.result[0].Value) {
+                    if (options.codeRepetition || lastCode != a) {
                         beep();
-                        lastCode = e.data.result[0].Value;
+                        lastCode = a;
                         options.resultFunction({
                             format: 'QR Code',
                             code: a,

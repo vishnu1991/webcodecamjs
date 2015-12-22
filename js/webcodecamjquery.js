@@ -242,9 +242,9 @@
                 delayBool = true;
                 delay();
                 setTimeout(function() {
-                    if (Self.options.codeRepetition || lastCode != e.data.result[0].Value) {
+                    if (Self.options.codeRepetition || lastCode != a) {
                         beep();
-                        lastCode = e.data.result[0].Value;
+                        lastCode = a;
                         Self.options.resultFunction({
                             format: 'QR Code',
                             code: a,

@@ -58,10 +58,17 @@
         },
         cameraError: function(error) {
             var p, message = "Error detected with the following parameters:\n";
-            for (p in error) {
-                message += (p + ": " + error[p] + "\n");
+            if (error.name == "NotSupportedError") {
+                var ans = confirm("Your browser does not support getUserMedia via HTTP!\n(see: https://goo.gl/Y0ZkNV).\n You want to see github demo page in a new window?");
+                if (ans) {
+                    window.open("https://andrastoth.github.io/webcodecamjs/");
+                }
+            } else {
+                for (p in error) {
+                    message += p + ": " + error[p] + "\n";
+                }
+                alert(message);
             }
-            alert(message);
         },
         cameraSuccess: function() {
             grabImg.removeClass("disabled");
