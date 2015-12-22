@@ -16,6 +16,7 @@ Advantages compared to the previous version:<br>
     - More configurable
 
 * [WebCodeCamJS] - Online Demo 
+* [Homepage] - Home page 
 
 <img src = "compatibility.jpg" width="100%"/>
 <img src = "demo.jpg" width="100%"/>
@@ -243,6 +244,7 @@ http://atandrastoth.co.uk/
 
 2015-06-10
 
-[WebCodeCamJS]:http://atandrastoth.co.uk/main/pages/plugins/webcodecamjs/
+[Homepage]:http://atandrastoth.co.uk/main/pages/plugins/webcodecamjs/
+[WebCodeCamJS]:https://andrastoth.github.io/webcodecamjs/
 [DecoderWorker.js]:https://github.com/EddieLa/BarcodeReader
 [qrcodelib.js]:https://github.com/LazarSoft/jsqrcode
