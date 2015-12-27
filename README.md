@@ -15,8 +15,7 @@ Advantages compared to the previous version:<br>
     - Lower CPU and Memory usage
     - More configurable
 
-* [WebCodeCamJS] - Online Demo 
-* [Homepage] - Home page 
+* [Homepage] - Home page, demonstration
 
 <img src = "compatibility.jpg" width="100%"/>
 <img src = "demo.jpg" width="100%"/>
