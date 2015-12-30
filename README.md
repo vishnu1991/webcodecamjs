@@ -23,6 +23,14 @@ Advantages compared to the previous version:<br>
 Version
 ----
 
+2.0.5
+
+    - Add parameter tryVertical to options
+    - Some minor modification
+
+Version
+----
+
 2.0.1
 
     - Add parameter successTimeout to options
@@ -132,6 +140,7 @@ Required HTML & Javascript example
         DecodeBarCodeRate: 5,           // null to disable OR int > 0 !
         successTimeout: 500,            // delay time when decoding is succeed
         codeRepetition: true,           // accept code repetition true or false
+        tryVertical: true,              // try decoding vertically positioned barcode true or false
         frameRate: 15,                  // 1 - 25
         width: 320,                     // canvas width
         height: 240,                    // canvas height

@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJS 2.0.1 javascript Bar code and QR code decoder 
+ * WebCodeCamJS 2.0.5 javascript Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -35,7 +35,7 @@ var WebCodeCamJS = function(element) {
         video = html('<video muted autoplay></video>'),
         sucessLocalDecode = false,
         localImage = false,
-        flipped = false,
+        flipMode = [1, 3, 6, 8],
         isStreaming = false,
         delayBool = false,
         initialized = false,
@@ -45,6 +45,7 @@ var WebCodeCamJS = function(element) {
             decodeBarCodeRate: 3,
             successTimeout: 500,
             codeRepetition: true,
+            tryVertical: true,
             frameRate: 15,
             width: 320,
             height: 240,
@@ -223,7 +224,6 @@ var WebCodeCamJS = function(element) {
                     }, 0);
                 }
                 if ((!sucessLocalDecode || !localImage) && e.data.success != 'localization') {
-                    flipped = !flipped;
                     if (!localImage) {
                         setTimeout(tryParseBarCode, 1E3 / options.decodeBarCodeRate);
                     }
@@ -252,7 +252,12 @@ var WebCodeCamJS = function(element) {
 
     function tryParseBarCode() {
         display.style.transform = 'scale(' + (options.flipHorizontal ? '-1' : '1') + ', ' + (options.flipVertical ? '-1' : '1') + ')';
-        var flipMode = flipped === true ? 'flip' : 'normal';
+        if (options.tryVertical && !localImage) {
+            flipMode.push(flipMode[0]);
+            flipMode.remove(0);
+        } else {
+            flipMode = [1, 3, 6, 8];
+        }
         lastImageSrc = display.toDataURL();
         DecodeWorker.postMessage({
             scan: con.getImageData(0, 0, w, h).data,
@@ -260,8 +265,7 @@ var WebCodeCamJS = function(element) {
             scanHeight: h,
             multiple: false,
             decodeFormats: ["Code128", "Code93", "Code39", "EAN-13", "2Of5", "Inter2Of5", "Codabar"],
-            cmd: flipMode,
-            rotation: 1
+            rotation: flipMode[0]
         });
     }
 
