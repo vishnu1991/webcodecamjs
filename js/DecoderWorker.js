@@ -886,7 +886,7 @@ function BinaryString(img, type) {
                 binaryString = binTemp;
             }
             if (typeof binaryString == 'undefined') continue;
-            if (binaryString.length > 4) {
+            if (binaryString.length > 4 || (FormatPriority[i] == "Code39" && binaryString.length > 2)) {
                 if (FormatPriority[i] == "Code128") {
                     if (CheckCode128(binaryString)) {
                         binaryString = DecodeCode128(binaryString);
@@ -1623,9 +1623,11 @@ function DecodeCode39(string) {
     for (var i = 1; i < string.length - 1; i++) {
         character = Code39Encoding[string[i].join("")].character;
         if (character == "$" || character == "/" || character == "+" || character == "%") {
-            special = true;
-            specialchar = character;
-            continue;
+            if (i + 1 < string.length - 1) {
+                special = true;
+                specialchar = character;
+                continue;
+            }
         }
         if (special) {
             if (typeof ExtendedEncoding[specialchar + character] == 'undefined') {} else {
@@ -2730,7 +2732,7 @@ EAN13Encoding = {
         "3112": 9
     },
     formats: {
-        'GGGLLL': 0,
+        'GGGGGG': 0,
         'GGLGLL': 1,
         'GGLLGL': 2,
         'GGLLLG': 3,
@@ -2740,7 +2742,7 @@ EAN13Encoding = {
         'GLGLGL': 7,
         'GLGLLG': 8,
         'GLLGLG': 9,
-        'LLLGGG': 0,
+        'LLLLLL': 0,
         'LLGLGG': 1,
         'LLGGLG': 2,
         'LLGGGL': 3,
@@ -2749,8 +2751,7 @@ EAN13Encoding = {
         'LGGGLL': 6,
         'LGLGLG': 7,
         'LGLGGL': 8,
-        'LGGLGL': 9,
-        "LLLLLL": 0
+        'LGGLGL': 9
     }
 };
 self.onmessage = function(e) {

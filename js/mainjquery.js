@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJQuery 2.0.1 javascript Bar-Qr code decoder 
+ * WebCodeCamJQuery 2.0.5 javascript Bar-Qr code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com

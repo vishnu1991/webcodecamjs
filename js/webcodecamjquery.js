@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJQuery 2.0.1 jQuery plugin Bar code and QR code decoder 
+ * WebCodeCamJQuery 2.0.5 jQuery plugin Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -30,16 +30,17 @@
         video = $('<video muted autoplay></video>')[0],
         sucessLocalDecode = false,
         localImage = false,
-        flipped = false,
+        flipMode = [1, 3, 6, 8],
         isStreaming = false,
         delayBool = false,
         initialized = false,
         localStream = null,
         defaults = {
             decodeQRCodeRate: 5,
-            decodeBarCodeRate: 5,
+            decodeBarCodeRate: 3,
             successTimeout: 500,
             codeRepetition: true,
+            tryVertical: true,
             frameRate: 15,
             width: 320,
             height: 240,
@@ -229,7 +230,6 @@
                     }, 0);
                 }
                 if ((!sucessLocalDecode || !localImage) && e.data.success != 'localization') {
-                    flipped = !flipped;
                     if (!localImage) {
                         setTimeout(tryParseBarCode, 1E3 / Self.options.decodeBarCodeRate);
                     }
@@ -260,7 +260,12 @@
         $(display).css({
             'transform': 'scale(' + (Self.options.flipHorizontal ? '-1' : '1') + ', ' + (Self.options.flipVertical ? '-1' : '1') + ')'
         });
-        var flipMode = flipped === true ? 'flip' : 'normal';
+        if (Self.options.tryVertical && !localImage) {
+            flipMode.push(flipMode[0]);
+            flipMode.remove(0);
+        } else {
+            flipMode = [1, 3, 6, 8];
+        }
         lastImageSrc = display.toDataURL();
         DecodeWorker.postMessage({
             scan: con.getImageData(0, 0, w, h).data,
@@ -268,8 +273,7 @@
             scanHeight: h,
             multiple: false,
             decodeFormats: ["Code128", "Code93", "Code39", "EAN-13", "2Of5", "Inter2Of5", "Codabar"],
-            cmd: flipMode,
-            rotation: 1
+            rotation: flipMode[0]
         });
     }
 
