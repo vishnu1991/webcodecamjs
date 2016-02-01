@@ -416,7 +416,15 @@ var WebCodeCamJS = function(element) {
                     devices.forEach(function(device) {
                         gotSources(device);
                     });
-                    videoSelect.selectedIndex = videoSelect.children.length <= ind ? 0 : ind;
+                    if (typeof ind === 'string') {
+                        Array.prototype.find.call(videoSelect.children, function(a, i) {
+                            if (a['innerText' in HTMLElement.prototype ? 'innerText' : 'textContent'].toLowerCase().match(new RegExp(ind, 'g'))) {
+                                videoSelect.selectedIndex = i;
+                            }
+                        });
+                    } else {
+                        videoSelect.selectedIndex = videoSelect.children.length <= ind ? 0 : ind;
+                    }
                 }).catch(function(error) {
                     options.getDevicesError(error);
                 });
@@ -498,9 +506,11 @@ var WebCodeCamJS = function(element) {
 
     function download(filename, url) {
         var a = window.document.createElement('a');
-        a.href = url;
-        a.download = filename;
+        document.querySelector('body').appendChild(a);
+        a.setAttribute('href', url);
+        a.setAttribute('download', filename);
         a.click();
+        document.querySelector('body').removeChild(a);
     }
 
     function mergeRecursive(target, source) {
@@ -570,7 +580,7 @@ var WebCodeCamJS = function(element) {
         },
         play: function() {
             localImage = false;
-            play();
+            setTimeout(play, 100);
             return this;
         },
         stop: function() {
