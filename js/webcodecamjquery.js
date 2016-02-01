@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJQuery 2.0.5 jQuery plugin Bar code and QR code decoder 
+ * WebCodeCamJQuery 2.1.0 jQuery plugin Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -426,7 +426,15 @@
                     devices.forEach(function(device) {
                         gotSources(device);
                     });
-                    videoSelect.prop('selectedIndex', videoSelect.children().length <= ind ? 0 : ind);
+                    if (typeof ind === 'string') {
+                        Array.prototype.find.call(videoSelect.get(0).children, function(a, i) {
+                            if ($(a).text().toLowerCase().match(new RegExp(ind, 'g'))) {
+                                videoSelect.prop('selectedIndex', i);
+                            }
+                        });
+                    } else {
+                        videoSelect.prop('selectedIndex', videoSelect.children().length <= ind ? 0 : ind);
+                    }
                 }).catch(function(error) {
                     Self.options.getDevicesError(error);
                 });
@@ -499,10 +507,13 @@
     }
 
     function download(filename, url) {
-        var a = window.document.createElement('a');
-        a.href = url;
-        a.download = filename;
+        var a = $('<a>');
+        a.attr('href', url);
+        a.attr('download', filename);
+        a.css('display', 'none');
+        a.appendTo('body');
         a.click();
+        a.remove();
     }
 
     function NotSupportError(message) {
@@ -537,7 +548,7 @@
         play: function() {
             this.init();
             localImage = false;
-            play();
+            setTimeout(play, 100);
             return this;
         },
         stop: function() {

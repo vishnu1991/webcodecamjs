@@ -8,14 +8,17 @@
     </head>
     <body>
         <div class="page-header text-center">
-            <h1 style="color: cadetblue;">WebCodeCamJS 2.0.5<br>&amp;<br>
-                                          WebCodeCamJQuery 2.0.5<br>
+            <h1 style="color: cadetblue;">WebCodeCamJS 2.1.0<br>&amp;<br>
+                                          WebCodeCamJQuery 2.1.0<br>
                 <small>Download from:
                     <a href="https://github.com/andrastoth/WebCodeCamJS" target="_blank"> GitHub </a> Or 
                     <a href="http://www.jsclasses.org/package/446-JavaScript-Qr-and-barcode-decoder.html" target="_blank"> JSclasses </a>
                 </small>
             </h1>
             <p style="font-style: italic;">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                News in this version 2.1.0 extend BuildSelectMenu function
+                <span class="glyphicon glyphicon-info-sign"></span><br>
                 <span class="glyphicon glyphicon-info-sign"></span>
                 News in this version 2.0.5 Add parameter tryVertical to options
                 <span class="glyphicon glyphicon-info-sign"></span><br>
@@ -51,7 +54,7 @@
                     <tr>
                         <th>Functions</th>
                         <th><a>IE11</a><img src="css/Internet_Explorer_9.png"></th>
-                        <th><a>MS Spartan</a><img src="css/949320192f43b9d8.png"></th>
+                        <th><a>MS Edge</a><img src="css/949320192f43b9d8.png"></th>
                         <th><a>Chrome 44</a><img src="css/google-chrome.png"></th>
                         <th><a>Chrome Canary</a><img src="css/Chrome_Canary_Icon.png"></th>
                         <th><a>Firefox 39.0.0</a><img src="css/mozilla_firefox.png"></th>
@@ -150,7 +153,10 @@
                 </div>
                 <div class="panel-footer">
                     <h3>Required HTML &amp; Javascript example</h3>
-<!-- HTML generated using hilite.me --><div style="background: #272822; overflow:auto;width:auto;padding:0;height:400px;"><pre style="margin: 0; line-height: 125%"><span style="color: #75715e">&lt;!DOCTYPE html&gt;</span>
+<!-- HTML generated using hilite.me -->
+<div style="background: #272822; overflow:auto;width:auto;padding:0;height:400px;">
+<pre style="margin: 0; line-height: 125%">
+<span style="color: #75715e">&lt;!DOCTYPE html&gt;</span>
 <span style="color: #f92672">&lt;html&gt;</span>
     <span style="color: #f92672">&lt;head&gt;</span>
         <span style="color: #f92672">&lt;meta</span> <span style="color: #a6e22e">charset=</span><span style="color: #e6db74">&quot;UTF-8&quot;</span><span style="color: #f92672">&gt;</span>
@@ -167,7 +173,7 @@
         <span style="color: #75715e">&lt;!-- </span>
 <span style="color: #75715e">            Using jquery version:</span>
 <span style="color: #75715e">            &lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.js&quot;&gt;&lt;/script&gt;</span>
-<span style="color: #75715e">           &lt;script type=&quot;text/javascript&quot; src=&quot;js/qrcodelib.js&quot;&gt;&lt;/script&gt;</span>
+<span style="color: #75715e">            &lt;script type=&quot;text/javascript&quot; src=&quot;js/qrcodelib.js&quot;&gt;&lt;/script&gt;</span>
 <span style="color: #75715e">            &lt;script type=&quot;text/javascript&quot; src=&quot;js/webcodecamjquery.js&quot;&gt;&lt;/script&gt;</span>
 <span style="color: #75715e">        --&gt;</span>
         <span style="color: #f92672">&lt;script </span><span style="color: #a6e22e">type=</span><span style="color: #e6db74">&quot;text/javascript&quot;</span><span style="color: #f92672">&gt;</span>
@@ -184,17 +190,17 @@
                     <span style="color: #f8f8f2">document.</span><span style="color: #a6e22e">querySelector</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;body&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">appendChild</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">aChild</span><span style="color: #f8f8f2">);</span>
                 <span style="color: #f8f8f2">}</span>
             <span style="color: #f8f8f2">};</span>
-  <span style="color: #75715e">/* ----------------------------------------- Available parameters -----------------------------------------*/</span>
+    <span style="color: #75715e">/* -------------------------------------- Available parameters --------------------------------------*/</span>
     <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">options</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span>
-        <span style="color: #a6e22e">DecodeQRCodeRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span>            <span style="color: #75715e">// null to disable OR int &gt; 0 !</span>
-        <span style="color: #a6e22e">DecodeBarCodeRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span>           <span style="color: #75715e">// null to disable OR int &gt; 0 !</span>
-        <span style="color: #a6e22e">successTimeout</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">500</span><span style="color: #f8f8f2">,</span>            <span style="color: #75715e">// delay time when decoding is succeed</span>
-        <span style="color: #a6e22e">codeRepetition</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">true</span><span style="color: #f8f8f2">,</span>           <span style="color: #75715e">// accept code repetition true or false</span>
-        <span style="color: #a6e22e">tryVertical</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">true</span><span style="color: #f8f8f2">,</span>              <span style="color: #75715e">// try decoding vertically positioned barcode true or false</span>
-        <span style="color: #a6e22e">frameRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">15</span><span style="color: #f8f8f2">,</span>                  <span style="color: #75715e">// 1 - 25</span>
-        <span style="color: #a6e22e">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">320</span><span style="color: #f8f8f2">,</span>                     <span style="color: #75715e">// canvas width</span>
-        <span style="color: #a6e22e">height</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">240</span><span style="color: #f8f8f2">,</span>                    <span style="color: #75715e">// canvas height</span>
-        <span style="color: #a6e22e">constraints</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">{</span>                  <span style="color: #75715e">// default constraints</span>
+        <span style="color: #a6e22e">DecodeQRCodeRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span>                    <span style="color: #75715e">// null to disable OR int &gt; 0 !</span>
+        <span style="color: #a6e22e">DecodeBarCodeRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span>                   <span style="color: #75715e">// null to disable OR int &gt; 0 !</span>
+        <span style="color: #a6e22e">successTimeout</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">500</span><span style="color: #f8f8f2">,</span>                    <span style="color: #75715e">// delay time when decoding is succeed</span>
+        <span style="color: #a6e22e">codeRepetition</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">true</span><span style="color: #f8f8f2">,</span>                   <span style="color: #75715e">// accept code repetition true or false</span>
+        <span style="color: #a6e22e">tryVertical</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">true</span><span style="color: #f8f8f2">,</span>                      <span style="color: #75715e">// try decoding vertically positioned barcode true or false</span>
+        <span style="color: #a6e22e">frameRate</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">15</span><span style="color: #f8f8f2">,</span>                          <span style="color: #75715e">// 1 - 25</span>
+        <span style="color: #a6e22e">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">320</span><span style="color: #f8f8f2">,</span>                             <span style="color: #75715e">// canvas width</span>
+        <span style="color: #a6e22e">height</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">240</span><span style="color: #f8f8f2">,</span>                            <span style="color: #75715e">// canvas height</span>
+        <span style="color: #a6e22e">constraints</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">{</span>                          <span style="color: #75715e">// default constraints</span>
             <span style="color: #a6e22e">video</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">{</span>
                 <span style="color: #a6e22e">mandatory</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">{</span>
                     <span style="color: #a6e22e">maxWidth</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">1280</span><span style="color: #f8f8f2">,</span>
@@ -216,59 +222,63 @@
         <span style="color: #a6e22e">grayScale</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">,</span>                       <span style="color: #75715e">// boolean</span>
         <span style="color: #a6e22e">contrast</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span>                            <span style="color: #75715e">// int</span>
         <span style="color: #a6e22e">threshold</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span>                           <span style="color: #75715e">// int </span>
-        <span style="color: #a6e22e">sharpness</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">[],</span>                  <span style="color: #75715e">// to On declare matrix, example for sharpness -&gt;  [0, -1, 0, -1, 5, -1, 0, -1, 0]</span>
-        <span style="color: #a6e22e">resultFunction</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">resText</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">lastImageSrc</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span> <span style="color: #75715e">//resText as decoded code, lastImageSrc as image source</span>
-            <span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">resText</span><span style="color: #f8f8f2">);</span>
+        <span style="color: #a6e22e">sharpness</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">[],</span>      <span style="color: #75715e">// to On declare matrix, example for sharpness -&gt;  [0, -1, 0, -1, 5, -1, 0, -1, 0]</span>
+        <span style="color: #a6e22e">resultFunction</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">result</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+            <span style="color: #75715e">/*</span>
+<span style="color: #75715e">                result.format: code format,</span>
+<span style="color: #75715e">                result.code: decoded string,</span>
+<span style="color: #75715e">                result.imgData: decoded image data</span>
+<span style="color: #75715e">            */</span>
+            <span style="color: #a6e22e">alert</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">result</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">code</span><span style="color: #f8f8f2">);</span>
         <span style="color: #f8f8f2">},</span>
-        <span style="color: #a6e22e">cameraSuccess</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">stream</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>                   <span style="color: #75715e">//callback funtion to camera success</span>
+        <span style="color: #a6e22e">cameraSuccess</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">stream</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>           <span style="color: #75715e">//callback funtion to camera success</span>
             <span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;cameraSuccess&#39;</span><span style="color: #f8f8f2">);</span>
         <span style="color: #f8f8f2">},</span>
-        <span style="color: #a6e22e">canPlayFunction</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>                       <span style="color: #75715e">//callback funtion to can play</span>
+        <span style="color: #a6e22e">canPlayFunction</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>               <span style="color: #75715e">//callback funtion to can play</span>
             <span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;canPlayFunction&#39;</span><span style="color: #f8f8f2">);</span>
         <span style="color: #f8f8f2">},</span>
-        <span style="color: #a6e22e">getDevicesError</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>                  <span style="color: #75715e">//callback funtion to get Devices error</span>
+        <span style="color: #a6e22e">getDevicesError</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>          <span style="color: #75715e">//callback funtion to get Devices error</span>
             <span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">);</span>
         <span style="color: #f8f8f2">},</span>
-        <span style="color: #a6e22e">getUserMediaError</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>                <span style="color: #75715e">//callback funtion to get usermedia error</span>
+        <span style="color: #a6e22e">getUserMediaError</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>        <span style="color: #75715e">//callback funtion to get usermedia error</span>
             <span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">);</span>
         <span style="color: #f8f8f2">},</span>
-        <span style="color: #a6e22e">cameraError</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>                      <span style="color: #75715e">//callback funtion to camera error  </span>
+        <span style="color: #a6e22e">cameraError</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>              <span style="color: #75715e">//callback funtion to camera error  </span>
             <span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">);</span>
         <span style="color: #f8f8f2">}</span>
     <span style="color: #f8f8f2">};</span>
 
-    <span style="color: #75715e">/*------------------------------------ Declarations and initializing ------------------------------------*/</span>
+    <span style="color: #75715e">/*---------------------------- Example initializations Javascript version ----------------------------*/</span>
     <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WebCodeCamJS</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;canvas&quot;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arg</span><span style="color: #f8f8f2">);</span>
     <span style="color: #75715e">/* OR */</span>
     <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">canvas</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">document.</span><span style="color: #a6e22e">querySelector</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#webcodecam-canvas&#39;</span><span style="color: #f8f8f2">);</span>
     <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WebCodeCamJS</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">canvas</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">();</span>
     <span style="color: #75715e">/* OR */</span>
     <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WebCodeCamJS</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#webcodecam-canvas&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">();</span>
-    <span style="color: #75715e">/*--------------------------------------- Example initializations ---------------------------------------*/</span>
-    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">decoder</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WebCodeCamJS</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#webcodecam-canvas&#39;</span><span style="color: #f8f8f2">);</span>
-    <span style="color: #75715e">/* Chrome &amp; Spartan: build select menu, return decoder object</span>
-<span style="color: #75715e">    *  Firefox: the default camera initializes, return decoder object </span>
-<span style="color: #75715e">    */</span>
-    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">index</span><span style="color: #f8f8f2">);</span> <span style="color: #75715e">//index : default camera index optional</span>
-    <span style="color: #75715e">//init with arguments, return decoder object</span>
-    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">args</span><span style="color: #f8f8f2">);</span>
-    <span style="color: #75715e">/*OR with defaults*/</span>
-    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">decoder</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WebCodeCamJS</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#webcodecam-canvas&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">();</span>
-    <span style="color: #75715e">/*OR with arguments*/</span>
-    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">decoder</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WebCodeCamJS</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#webcodecam-canvas&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">args</span><span style="color: #f8f8f2">);</span>
-    <span style="color: #75715e">/*OR with video source selector builder and initialization*/</span>
-    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">decoder</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WebCodeCamJS</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#webcodecam-canvas&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;select&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">args</span><span style="color: #f8f8f2">);</span>
 
-    <span style="color: #75715e">/*---------------------------- Example initializations using jquery version ----------------------------*/</span>
+    <span style="color: #75715e">/*------------------------ Example initializations jquery &amp; Javascript version ------------------------*/</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">decoder</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WebCodeCamJS</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#webcodecam-canvas&#39;</span><span style="color: #f8f8f2">);</span>
+
     <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">decoder</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;#webcodecam-canvas&quot;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">WebCodeCamJQuery</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">args</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">data</span><span style="color: #f8f8f2">().</span><span style="color: #a6e22e">plugin_WebCodeCamJQuery</span><span style="color: #f8f8f2">;</span>
-    <span style="color: #75715e">/* Chrome &amp; Spartan: build select menu</span>
+
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">sel</span><span style="color: #f8f8f2">);</span> <span style="color: #75715e">//sel : default camera optional</span>
+    <span style="color: #75715e">/* Chrome &amp; ': build select menu</span>
 <span style="color: #75715e">    *  Firefox: the default camera initializes, return decoder object </span>
 <span style="color: #75715e">    */</span>
-    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">index</span><span style="color: #f8f8f2">);</span> <span style="color: #75715e">//index : default camera index optional</span>
     <span style="color: #75715e">//simple initialization</span>
     <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">();</span>
+    <span style="color: #75715e">/* Select environment camera if available */</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;environment|back&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">args</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #75715e">/* Select user camera if available */</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;user|front&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">args</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #75715e">/* Select camera by name */</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;facecam&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">args</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #75715e">/* Select first camera */</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;#camera-select&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">args</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #75715e">/* Select environment camera if available, without visible select menu*/</span>
+    <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">buildSelectMenu</span><span style="color: #f8f8f2">(document.</span><span style="color: #a6e22e">createElement</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;select&#39;</span><span style="color: #f8f8f2">),</span> <span style="color: #e6db74">&#39;environment|back&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">init</span><span style="color: #f8f8f2">().</span><span style="color: #a6e22e">play</span><span style="color: #f8f8f2">();</span>   
 
-    <span style="color: #75715e">/* ---------------------------------------- Available Functions: ----------------------------------------*/</span>
+    <span style="color: #75715e">/* --------------------------------------- Available Functions: ----------------------------------------*/</span>
     <span style="color: #75715e">/* camera stop &amp; delete stream */</span>
     <span style="color: #a6e22e">decoder</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">stop</span><span style="color: #f8f8f2">();</span>
     <span style="color: #75715e">/* camera play, restore process */</span>
@@ -289,7 +299,7 @@
         <span style="color: #f92672">&lt;/script&gt;</span>
     <span style="color: #f92672">&lt;/body&gt;</span>
 <span style="color: #f92672">&lt;/html&gt;</span>
-</pre></div>
+</pre>
                 </div>
             </div>
         </div>
