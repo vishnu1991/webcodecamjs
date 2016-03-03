@@ -254,7 +254,7 @@ var WebCodeCamJS = function(element) {
         display.style.transform = 'scale(' + (options.flipHorizontal ? '-1' : '1') + ', ' + (options.flipVertical ? '-1' : '1') + ')';
         if (options.tryVertical && !localImage) {
             flipMode.push(flipMode[0]);
-            flipMode.remove(0);
+            flipMode.splice(0 , 1);
         } else {
             flipMode = [1, 3, 6, 8];
         }
