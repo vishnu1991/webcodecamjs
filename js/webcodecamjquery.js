@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJQuery 2.1.0 jQuery plugin Bar code and QR code decoder 
+ * WebCodeCamJQuery 2.1.0 jQuery plugin Bar code and QR code decoder
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -262,7 +262,7 @@
         });
         if (Self.options.tryVertical && !localImage) {
             flipMode.push(flipMode[0]);
-            flipMode.remove(0);
+            flipMode.splice(0 , 1);
         } else {
             flipMode = [1, 3, 6, 8];
         }
