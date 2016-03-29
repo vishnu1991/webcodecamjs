@@ -67,8 +67,8 @@
             contrast: 0,
             threshold: 0,
             sharpness: [],
-            resultFunction: function(resText, lastImageSrc) {
-                console.log(resText);
+            resultFunction: function(res) {
+                console.log(res.format + ": " + res.code);
             },
             cameraSuccess: function(stream) {
                 console.log('cameraSuccess');
