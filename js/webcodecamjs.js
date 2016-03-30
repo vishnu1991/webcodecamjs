@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJS 2.0.5 javascript Bar code and QR code decoder 
+ * WebCodeCamJS 2.1.0 javascript Bar code and QR code decoder 
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -9,7 +9,7 @@ var WebCodeCamJS = function(element) {
     'use strict';
     this.Version = {
         name: 'WebCodeCamJS',
-        version: '2.0.1',
+        version: '2.1.0',
         author: 'Tóth András'
     };
     var mediaDevices = (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) ? navigator.mediaDevices : ((navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) ? {
@@ -72,8 +72,8 @@ var WebCodeCamJS = function(element) {
             contrast: 0,
             threshold: 0,
             sharpness: [],
-            resultFunction: function(resText, lastImageSrc) {
-                console.log(resText);
+            resultFunction: function(res) {
+                console.log(res.format + ": " + res.code);
             },
             cameraSuccess: function(stream) {
                 console.log('cameraSuccess');
@@ -330,20 +330,14 @@ var WebCodeCamJS = function(element) {
     }
 
     function contrast(pixels, cont) {
-        var d = pixels.data,
-            average;
-        for (var i = 0; i < d.length; i += 4) {
-            cont = 10,
-                average = Math.round((d[i] + d[i + 1] + d[i + 2]) / 3);
-            if (average > 127) {
-                d[i] += d[i] / average * cont;
-                d[i + 1] += d[i + 1] / average * cont;
-                d[i + 2] += d[i + 2] / average * cont;
-            } else {
-                d[i] -= d[i] / average * cont;
-                d[i + 1] -= d[i + 1] / average * cont;
-                d[i + 2] -= d[i + 2] / average * cont;
-            }
+        var data = pixels.data;
+        var factor = (259 * (cont + 255)) / (255 * (259 - cont));
+
+        for(var i=0;i<data.length;i+=4)
+        {
+            data[i] = factor * (data[i] - 128) + 128;
+            data[i+1] = factor * (data[i+1] - 128) + 128;
+            data[i+2] = factor * (data[i+2] - 128) + 128;
         }
         return pixels;
     }
