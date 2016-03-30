@@ -340,20 +340,14 @@
     }
 
     function contrast(pixels, cont) {
-        var d = pixels.data,
-            average;
-        for (var i = 0; i < d.length; i += 4) {
-            cont = 10,
-                average = Math.round((d[i] + d[i + 1] + d[i + 2]) / 3);
-            if (average > 127) {
-                d[i] += d[i] / average * cont;
-                d[i + 1] += d[i + 1] / average * cont;
-                d[i + 2] += d[i + 2] / average * cont;
-            } else {
-                d[i] -= d[i] / average * cont;
-                d[i + 1] -= d[i + 1] / average * cont;
-                d[i + 2] -= d[i + 2] / average * cont;
-            }
+        var data = pixels.data;
+        var factor = (259 * (cont + 255)) / (255 * (259 - cont));
+
+        for(var i=0;i<data.length;i+=4)
+        {
+            data[i] = factor * (data[i] - 128) + 128;
+            data[i+1] = factor * (data[i+1] - 128) + 128;
+            data[i+2] = factor * (data[i+2] - 128) + 128;
         }
         return pixels;
     }
