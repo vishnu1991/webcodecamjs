@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJQuery 2.1.0 jQuery plugin Bar code and QR code decoder
+ * WebCodeCamJQuery 2.5.0 jQuery plugin Bar code and QR code decoder
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -8,22 +8,20 @@
 (function($, window, document, undefined) {
     'use strict';
     var pluginName = 'WebCodeCamJQuery';
-    var mediaDevices = (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) ? navigator.mediaDevices : ((navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia) ? {
-        getUserMedia: function(c) {
-            return new Promise(function(y, n) {
-                (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia).call(navigator, c, y, n);
-            });
-        },
-        enumerateDevices: function(c) {
-            return new Promise(function(c, y, n) {
-                (MediaStreamTrack.getSources).call(navigator, c, y, n);
-            });
-        }
-    } : null);
+    var mediaDevices = window.navigator.mediaDevices;
+    mediaDevices.getUserMedia = function(c) {
+        return new Promise(function(y, n) {
+            (window.navigator.getUserMedia || window.navigator.mozGetUserMedia || window.navigator.webkitGetUserMedia).call(navigator, c, y, n);
+        });
+    }
     HTMLVideoElement.prototype.streamSrc = ('srcObject' in HTMLVideoElement.prototype) ? function(stream) {
         this.srcObject = !!stream ? stream : null;
     } : function(stream) {
-        this.src = !!stream ? (window.URL || window.webkitURL).createObjectURL(stream) : new String();
+        if (!!stream) {
+            this.src = (window.URL || window.webkitURL).createObjectURL(stream);
+        } else {
+            this.removeAttribute('src');
+        }
     };
     var Self, display, videoSelect, lastImageSrc, con, beepSound, w, h, lastCode,
         DecodeWorker = null,
@@ -58,12 +56,12 @@
             },
             flipVertical: false,
             flipHorizontal: false,
-            zoom: -1,
+            zoom: 0,
             beep: 'audio/beep.mp3',
             decoderWorker: 'js/DecoderWorker.js',
             brightness: 0,
-            autoBrightnessValue: false,
-            grayScale: false,
+            autoBrightnessValue: 0,
+            grayScale: 0,
             contrast: 0,
             threshold: 0,
             sharpness: [],
@@ -116,23 +114,20 @@
             if (!localStream) {
                 init();
             }
-            delayBool = true;
-            video.play();
-            setTimeout(function() {
-                delayBool = false;
-                if (Self.options.decodeBarCodeRate) {
-                    tryParseBarCode();
-                }
-                if (Self.options.decodeQRCodeRate) {
-                    tryParseQRCode();
-                }
-            }, 2E3);
+            const p = video.play();
+            if (p && (typeof Promise !== 'undefined') && (p instanceof Promise)) {
+                p.catch(e => null);
+            }
+            delay();
         }
     }
 
     function stop() {
         delayBool = true;
-        video.pause();
+        const p = video.pause();
+        if (p && (typeof Promise !== 'undefined') && (p instanceof Promise)) {
+            p.catch(e => null);
+        }
         video.streamSrc(null);
         con.clearRect(0, 0, w, h);
         if (localStream) {
@@ -145,7 +140,25 @@
 
     function pause() {
         delayBool = true;
-        video.pause();
+        const p = video.pause();
+        if (p && (typeof Promise !== 'undefined') && (p instanceof Promise)) {
+            p.catch(e => null);
+        }
+    }
+
+    function delay() {
+        delayBool = true;
+        if (!localImage) {
+            setTimeout(function() {
+                delayBool = false;
+                if (Self.options.decodeBarCodeRate) {
+                    tryParseBarCode();
+                }
+                if (Self.options.decodeQRCodeRate) {
+                    tryParseQRCode();
+                }
+            }, Self.options.successTimeout);
+        }
     }
 
     function beep() {
@@ -157,7 +170,6 @@
     function cameraSuccess(stream) {
         localStream = stream;
         video.streamSrc(stream);
-        video.play();
         Self.options.cameraSuccess(stream);
     }
 
@@ -181,31 +193,30 @@
         });
         $(video).on('play', function() {
             setInterval(function() {
-                if (video.paused || video.ended) {
-                    return;
+                if (!video.paused && !video.ended) {
+                    var z = Self.options.zoom;
+                    if (z === 0) {
+                        z = optimalZoom();
+                    }
+                    con.drawImage(video, (w * z - w) / -2, (h * z - h) / -2, w * z, h * z);
+                    var imageData = con.getImageData(0, 0, w, h);
+                    if (Self.options.grayScale) {
+                        imageData = grayScale(imageData);
+                    }
+                    if (Self.options.brightness !== 0 || Self.options.autoBrightnessValue) {
+                        imageData = brightness(imageData, Self.options.brightness);
+                    }
+                    if (Self.options.contrast !== 0) {
+                        imageData = contrast(imageData, Self.options.contrast);
+                    }
+                    if (Self.options.threshold !== 0) {
+                        imageData = threshold(imageData, Self.options.threshold);
+                    }
+                    if (Self.options.sharpness.length !== 0) {
+                        imageData = convolute(imageData, Self.options.sharpness);
+                    }
+                    con.putImageData(imageData, 0, 0);
                 }
-                var z = Self.options.zoom;
-                if (z < 0) {
-                    z = optimalZoom();
-                }
-                con.drawImage(video, (w * z - w) / -2, (h * z - h) / -2, w * z, h * z);
-                var imageData = con.getImageData(0, 0, w, h);
-                if (Self.options.grayScale) {
-                    imageData = grayScale(imageData);
-                }
-                if (Self.options.brightness !== 0 || Self.options.autoBrightnessValue) {
-                    imageData = brightness(imageData, Self.options.brightness);
-                }
-                if (Self.options.contrast !== 0) {
-                    imageData = contrast(imageData, Self.options.contrast);
-                }
-                if (Self.options.threshold !== 0) {
-                    imageData = threshold(imageData, Self.options.threshold);
-                }
-                if (Self.options.sharpness.length !== 0) {
-                    imageData = convolute(imageData, Self.options.sharpness);
-                }
-                con.putImageData(imageData, 0, 0);
             }, 1E3 / Self.options.frameRate);
         });
     }
@@ -262,7 +273,7 @@
         });
         if (Self.options.tryVertical && !localImage) {
             flipMode.push(flipMode[0]);
-            flipMode.splice(0 , 1);
+            flipMode.splice(0, 1);
         } else {
             flipMode = [1, 3, 6, 8];
         }
@@ -288,12 +299,6 @@
             if (!localImage && !delayBool) {
                 setTimeout(tryParseQRCode, 1E3 / Self.options.decodeQRCodeRate);
             }
-        }
-    }
-
-    function delay() {
-        if (!localImage) {
-            setTimeout(play, Self.options.successTimeout, true);
         }
     }
 
@@ -342,12 +347,10 @@
     function contrast(pixels, cont) {
         var data = pixels.data;
         var factor = (259 * (cont + 255)) / (255 * (259 - cont));
-
-        for(var i=0;i<data.length;i+=4)
-        {
+        for (var i = 0; i < data.length; i += 4) {
             data[i] = factor * (data[i] - 128) + 128;
-            data[i+1] = factor * (data[i+1] - 128) + 128;
-            data[i+2] = factor * (data[i+2] - 128) + 128;
+            data[i + 1] = factor * (data[i + 1] - 128) + 128;
+            data[i + 2] = factor * (data[i + 2] - 128) + 128;
         }
         return pixels;
     }
