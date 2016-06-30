@@ -606,6 +606,9 @@ var WebCodeCamJS = function(element) {
         isInitialized: function() {
             return initialized;
         },
+        getWorker: function () {
+            return DecodeWorker;
+        },
         options: options
     };
 };
