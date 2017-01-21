@@ -86,6 +86,7 @@
         }
     };
     var decoder = new WebCodeCamJS("#webcodecam-canvas").buildSelectMenu("#camera-select", "environment|back").init(args);
+    decoder.play();
     decodeLocal.addEventListener("click", function() {
         Page.decodeLocalImage();
     }, false);
